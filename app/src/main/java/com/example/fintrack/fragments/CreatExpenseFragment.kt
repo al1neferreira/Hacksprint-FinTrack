@@ -46,11 +46,11 @@ class CreatExpenseFragment : Fragment(R.layout.fragment_creat_expense), MenuProv
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        TODO("Not yet implemented")
+
     }
 
 }
