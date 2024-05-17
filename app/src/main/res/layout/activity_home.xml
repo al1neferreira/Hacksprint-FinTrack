@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/gray_200"
     android:theme="@style/Poppins"
-    tools:context=".HomeActivity">
+    tools:context=".home.HomeActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -32,7 +32,8 @@
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="92dp"
             app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="5dp">
+            app:cardCornerRadius="5dp"
+            app:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -74,7 +75,8 @@
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="5dp"
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -121,7 +123,8 @@
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="5dp"
+                app:cardElevation="4dp">
 
 
                 <LinearLayout
@@ -162,12 +165,23 @@
 
         </LinearLayout>
 
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Recent Transation"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="350dp"
-            android:layout_marginStart="20dp"/>
+            android:text="Recent Transaction" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_transactions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="400dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="10"
+            tools:listitem="@layout/item_rv_home" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
