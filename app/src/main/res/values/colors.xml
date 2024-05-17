@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
+    <color name="gray_200">#EEEEEE</color>
+    <color name="gray_500">#9E9E9E</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#F54336</color>
     <color name="pink">#EA1E61</color>
