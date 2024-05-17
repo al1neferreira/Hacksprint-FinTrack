@@ -1,6 +1,6 @@
 package com.example.fintrack.fragments
 
-import android.content.Context
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,8 +9,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.core.view.MenuProvider
 import com.example.fintrack.R
 import com.example.fintrack.databinding.FragmentCreatExpenseBinding
@@ -46,11 +44,11 @@ class CreatExpenseFragment : Fragment(R.layout.fragment_creat_expense), MenuProv
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-
+        TODO("Not yet implemented")
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-
+        TODO("Not yet implemented")
     }
 
 }
