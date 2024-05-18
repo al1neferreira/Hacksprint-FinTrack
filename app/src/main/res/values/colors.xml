@@ -18,4 +18,10 @@
     <color name="medium_orange">#FF5726</color>
     <color name="brown">#7A5548</color>
     <color name="grey">#607D8A</color>
+    <color name="blue_500">#006AF6</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="background">#f9f9f9</color>
+    <color name="income">#6FCF97</color>
+    <color name="expense">#EB5757</color>
+
 </resources>
