@@ -1,213 +1,239 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginStart="30dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginEnd="30dp"
-    android:layout_marginBottom="25dp">
+    android:layout_height="match_parent">
 
-    <include layout="@layout/toolbar_detail" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="20dp">
 
-    <TextView
-        android:id="@+id/tv_title_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="306dp"
-        android:fontFamily="@font/open_sans_bold"
-        android:padding="5dp"
-        android:text="Title"
-        android:textColor="@color/grey"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="630dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tv_desc_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginEnd="161dp"
-        android:fontFamily="@font/open_sans_regular"
-        android:hint="CashBack Offer - Payme"
-        android:padding="5dp"
-        android:textColorHint="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title_detail" />
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:collapsedTitleTextAppearance="?attr/textAppearanceTitleLarge"
+                app:menu="@menu/menu_detail"
+                app:navigationIcon="@drawable/arrow_back_24dp"
+                app:title="Details"
+                app:titleCentered="true"
+                app:titleTextAppearance="@style/ToolbarTitleAppearance" />
 
-    <TextView
-        android:id="@+id/tv_amount_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="284dp"
-        android:fontFamily="@font/open_sans_bold"
-        android:padding="5dp"
-        android:text="Amount"
-        android:textColor="@color/grey"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_desc_detail" />
+        </com.google.android.material.appbar.AppBarLayout>
 
-    <TextView
-        android:id="@+id/tv_amount_value_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginEnd="312dp"
-        android:fontFamily="@font/open_sans_regular"
-        android:hint="$50"
-        android:padding="5dp"
-        android:textColorHint="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_amount_detail" />
 
-    <TextView
-        android:id="@+id/tv_trans_type_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="223dp"
-        android:fontFamily="@font/open_sans_bold"
-        android:padding="5dp"
-        android:text="Transaction type"
-        android:textColor="@color/grey"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_amount_value_detail" />
+        <TextView
+            android:id="@+id/tv_title_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="76dp"
+            android:layout_marginEnd="306dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:padding="5dp"
+            android:text="Title"
+            android:textColor="@color/grey"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_trans_type_value_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginEnd="286dp"
-        android:hint="Income"
-        android:padding="5dp"
-        android:textColorHint="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_trans_type_detail" />
+        <TextView
+            android:id="@+id/tv_desc_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="161dp"
+            android:fontFamily="@font/open_sans_regular"
+            android:hint="CashBack Offer - Payme"
+            android:padding="5dp"
+            android:textColorHint="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_detail" />
 
-    <TextView
-        android:id="@+id/tv_category_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="278dp"
-        android:fontFamily="@font/open_sans_bold"
-        android:padding="5dp"
-        android:text="Category"
-        android:textColor="@color/grey"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_trans_type_value_detail" />
+        <TextView
+            android:id="@+id/tv_amount_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="284dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:padding="5dp"
+            android:text="Amount"
+            android:textColor="@color/grey"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_desc_detail" />
 
-    <TextView
-        android:id="@+id/tv_desc_category_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginEnd="231dp"
-        android:fontFamily="@font/open_sans_regular"
-        android:hint="Entertainment"
-        android:padding="5dp"
-        android:textColorHint="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_category_detail" />
+        <TextView
+            android:id="@+id/tv_amount_value_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="312dp"
+            android:fontFamily="@font/open_sans_regular"
+            android:hint="$50"
+            android:padding="5dp"
+            android:textColorHint="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_amount_detail" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="301dp"
-        android:fontFamily="@font/open_sans_bold"
-        android:padding="5dp"
-        android:text="When"
-        android:textColor="@color/grey"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_desc_category_detail" />
+        <TextView
+            android:id="@+id/tv_trans_type_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="223dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:padding="5dp"
+            android:text="Transaction type"
+            android:textColor="@color/grey"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_amount_value_detail" />
 
-    <TextView
-        android:id="@+id/tv_date_picker_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="235dp"
-        android:fontFamily="@font/open_sans_regular"
-        android:hint="Sunday, 18 Dec"
-        android:padding="5dp"
-        android:textColorHint="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        <TextView
+            android:id="@+id/tv_trans_type_value_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="286dp"
+            android:hint="Income"
+            android:padding="5dp"
+            android:textColorHint="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_trans_type_detail" />
 
-    <TextView
-        android:id="@+id/tv_note_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="306dp"
-        android:fontFamily="@font/open_sans_bold"
-        android:padding="5dp"
-        android:text="Note"
-        android:textColor="@color/grey"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_date_picker_detail" />
+        <TextView
+            android:id="@+id/tv_category_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="278dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:padding="5dp"
+            android:text="Category"
+            android:textColor="@color/grey"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_trans_type_value_detail" />
 
-    <TextView
-        android:id="@+id/tv_desc_note_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginEnd="44dp"
-        android:fontFamily="@font/open_sans_regular"
-        android:hint="I got this amount from Payme for recharge"
-        android:padding="5dp"
-        android:textColorHint="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_note_detail" />
+        <TextView
+            android:id="@+id/tv_desc_category_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="231dp"
+            android:fontFamily="@font/open_sans_regular"
+            android:hint="Entertainment"
+            android:padding="5dp"
+            android:textColorHint="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_category_detail" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_edit_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_marginStart="231dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="15dp"
-        android:backgroundTint="@color/blue_500"
-        android:text="EDIT"
-        android:textColor="@color/white"
-        app:cornerRadius="20dp"
-        app:icon="@drawable/baseline_edit_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_desc_note_detail" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="301dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:padding="5dp"
+            android:text="When"
+            android:textColor="@color/grey"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_desc_category_detail" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_date_picker_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="235dp"
+            android:fontFamily="@font/open_sans_regular"
+            android:hint="Sunday, 18 Dec"
+            android:padding="5dp"
+            android:textColorHint="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <TextView
+            android:id="@+id/tv_note_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="306dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:padding="5dp"
+            android:text="Note"
+            android:textColor="@color/grey"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date_picker_detail" />
+
+        <TextView
+            android:id="@+id/tv_desc_note_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="44dp"
+            android:fontFamily="@font/open_sans_regular"
+            android:hint="I got this amount from Payme for recharge"
+            android:padding="5dp"
+            android:textColorHint="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_note_detail" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginStart="231dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="15dp"
+            android:backgroundTint="@color/blue_500"
+            android:text="EDIT"
+            android:textColor="@color/white"
+            app:cornerRadius="20dp"
+            app:icon="@drawable/baseline_edit_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_desc_note_detail" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
