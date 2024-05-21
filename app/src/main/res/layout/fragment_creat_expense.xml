@@ -10,145 +10,197 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-        tools:context=".fragments.CreatExpenseFragment">
+        tools:context=".fragments.CreateExpenseFragment">
 
         <TextView
             android:id="@+id/tv_name_modal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="Create an Outcome"
             android:textColor="@color/black"
-            android:textSize="25dp"
+            android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_title_modal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="Title"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name_modal"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name_modal" />
 
         <EditText
             android:id="@+id/edt_title_modal"
             android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/edit_text_shape"
             android:hint="Enter the title"
             android:padding="12dp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title_modal"
-            app:layout_constraintStart_toStartOf="parent"
+            android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_modal" />
 
         <TextView
             android:id="@+id/tv_category_modal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="Category"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/edt_title_modal"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edt_title_modal" />
 
         <Spinner
             android:id="@+id/spinner_categories"
             android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/spinner_background"
+            android:gravity="center"
             android:spinnerMode="dropdown"
-            app:layout_constraintTop_toBottomOf="@+id/tv_category_modal"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_category_modal" />
 
         <TextView
-            android:id="@+id/tv_price_modal"
+            android:id="@+id/tv_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Price"
+            android:layout_marginTop="16dp"
+            android:text="Color"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/spinner_categories"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_categories" />
 
-        <EditText
-            android:id="@+id/edt_price_modal"
+        <Spinner
+            android:id="@+id/spinner_colors"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:background="@drawable/edit_text_shape"
-            android:hint="Enter the price"
-            android:padding="12dp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/tv_price_modal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp" />
-
-        <TextView
-            android:id="@+id/tv_date_modal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/edt_price_modal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp" />
-
-        <EditText
-            android:id="@+id/edt_date_modal"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:background="@drawable/edit_text_shape"
-            android:hint="Select the date"
-            android:padding="12dp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/tv_date_modal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_pick_date"
+            android:layout_gravity="center"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"/>
-
-        <ImageButton
-            android:id="@+id/btn_pick_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_calendar"
-            app:layout_constraintTop_toBottomOf="@+id/tv_date_modal"
+            android:background="@drawable/color_blob"
+            android:gravity="center"
+            android:spinnerMode="dropdown"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@color/white"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_color" />
 
-        <com.google.android.material.button.MaterialButton
+
+        <LinearLayout
+            android:id="@+id/linear_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_colors"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginEnd="16dp">
+
+                <TextView
+                    android:id="@+id/tv_price_modal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Price"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edt_price_modal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/edit_text_shape"
+                    android:hint="Enter the price"
+                    android:padding="12dp"
+                    android:textStyle="bold"
+                    android:inputType="number"/>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linear_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="end">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_date_modal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_marginEnd="8dp"/>
+
+                    <ImageButton
+                        android:id="@+id/btn_pick_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:src="@drawable/ic_calendar" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/edt_date_modal"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/edit_text_shape"
+                    android:hint="MM/DD/YYYY"
+                    android:textAlignment="textEnd"
+                    android:padding="12dp"
+                    android:textStyle="bold"
+                    android:inputType="date"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <Button
             android:id="@+id/btn_create_expense"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_shape"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/black"
             android:text="CREATE"
-            app:layout_constraintTop_toBottomOf="@+id/edt_date_modal"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linear_container" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
