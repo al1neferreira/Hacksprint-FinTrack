@@ -3,6 +3,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        uri("https://oss.sonatype.org/content/repositories/snapshots/")
     }
 }
 
