@@ -9,9 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fintrack.R
 import com.example.fintrack.adapter.TransactionsAdapter
 import com.example.fintrack.databinding.ActivityHomeBinding
-import com.example.fintrack.fragments.CreatExpenseFragment
+import com.example.fintrack.fragments.CreateExpenseFragment
 import com.example.fintrack.model.Transactions
-import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class HomeActivity : AppCompatActivity() {
 
@@ -48,7 +47,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun openModalNewExpense() {
-        val dialog = CreatExpenseFragment()
+        val dialog = CreateExpenseFragment()
         dialog.show(supportFragmentManager, "CreateExpenseFragment")
     }
 
@@ -62,9 +61,11 @@ class HomeActivity : AppCompatActivity() {
             R.id.menu_more -> {
                 true
             }
+
             R.id.menu_light -> {
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

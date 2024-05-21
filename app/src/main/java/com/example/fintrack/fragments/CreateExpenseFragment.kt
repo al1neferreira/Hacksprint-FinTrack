@@ -10,29 +10,50 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.AdapterView
 import android.widget.EditText
-import android.widget.ImageButton
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
+import com.example.fintrack.util.ColorList
+import com.example.fintrack.model.ColorObject
+import com.example.fintrack.adapter.ColorSpinnerAdapter
 import com.example.fintrack.R
 import com.example.fintrack.databinding.FragmentCreatExpenseBinding
-import java.util.*
+import java.util.Calendar
 
-class CreatExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), MenuProvider {
+class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), MenuProvider {
 
     private var creatExpenseBinding: FragmentCreatExpenseBinding? = null
     private val binding get() = creatExpenseBinding!!
+    private lateinit var selectedColor: ColorObject
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.FullScreenDialog)
+
+    }
+
+    private fun loadColorSpinner() {
+        selectedColor = ColorList().defaultColor
+        binding.spinnerColors.apply {
+            adapter = ColorSpinnerAdapter(requireContext(), ColorList().basicColor())
+            setSelection(ColorList().colorPosition(selectedColor), false)
+            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    selectedColor = ColorList().basicColor()[position]
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        }
+
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         creatExpenseBinding = FragmentCreatExpenseBinding.inflate(inflater, container, false)
 
@@ -43,12 +64,16 @@ class CreatExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), Me
             showDatePicker(dateEditText)
         }
 
+        loadColorSpinner()
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
-        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        dialog?.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
         dialog?.window?.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -75,17 +100,16 @@ class CreatExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), Me
         datePickerDialog.show()
     }
 
-    override fun onDestroyView(){
+    override fun onDestroyView() {
         super.onDestroyView()
         creatExpenseBinding = null
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        // Implementação do método onCreateMenu
+        TODO()
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        // Implementação do método onMenuItemSelected
-        return true
+        TODO()
     }
 }
