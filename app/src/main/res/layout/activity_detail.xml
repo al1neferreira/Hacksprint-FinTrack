@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -20,17 +21,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/topAppBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:collapsedTitleTextAppearance="?attr/textAppearanceTitleLarge"
-                app:menu="@menu/menu_detail"
-                app:navigationIcon="@drawable/arrow_back_24dp"
-                app:title="Details"
-                app:titleCentered="true"
-                app:titleTextAppearance="@style/ToolbarTitleAppearance" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -232,6 +222,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_desc_note_detail" />
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            app:collapsedTitleTextAppearance="?attr/textAppearanceTitleLarge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/menu_detail"
+            app:navigationIcon="@drawable/arrow_back_24dp"
+            app:title="Details"
+            app:titleCentered="true"
+            app:titleTextAppearance="@style/ToolbarTitleAppearance" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
