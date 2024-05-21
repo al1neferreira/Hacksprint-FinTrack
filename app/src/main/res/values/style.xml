@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Open_Sans" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="fontFamily">@font/open_sans_semibold</item>
-
+    <style name="Poppins" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="fontFamily">@font/poppins_regular</item>
     </style>
 
     <style name="FullScreenDialog" parent="Theme.AppCompat.Light.Dialog">

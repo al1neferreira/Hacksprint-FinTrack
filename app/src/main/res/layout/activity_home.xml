@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_200"
-    android:theme="@style/Open_Sans"
+    android:theme="@style/Poppins"
     tools:context=".home.HomeActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

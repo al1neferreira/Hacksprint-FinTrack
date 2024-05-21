@@ -13,9 +13,6 @@
         android:theme="@style/Theme.FinTrack"
         tools:targetApi="31">
         <activity
-            android:name=".home.DetailActivity"
-            android:exported="false" />
-        <activity
             android:name=".home.HomeActivity"
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:exported="true">
