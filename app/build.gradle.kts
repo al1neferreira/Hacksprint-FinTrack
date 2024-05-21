@@ -71,4 +71,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.0")
     implementation("androidx.activity:activity-ktx:1.4.1")
 
+    //PowerSpinner
+    implementation ("com.github.skydoves:powerspinner:1.2.7")
+
 }

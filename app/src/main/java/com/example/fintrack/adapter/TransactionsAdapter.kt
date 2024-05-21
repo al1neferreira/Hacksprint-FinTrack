@@ -27,7 +27,7 @@ class TransactionsAdapter(private val transactions: List<Transactions>) :
             "Credit card" -> R.drawable.ic_credit_card
             "Electricity" -> R.drawable.ic_electricity
             "Gas station" -> R.drawable.ic_gas_station
-            "Wifi" -> R.drawable.ic_wifi
+            "Internet" -> R.drawable.ic_wifi
             "Home" -> R.drawable.ic_home
             "Game control" -> R.drawable.ic_game_control
             "Food" -> R.drawable.ic_food
@@ -39,14 +39,14 @@ class TransactionsAdapter(private val transactions: List<Transactions>) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): TransactionsAdapter.TransactionViewHolder {
+    ): TransactionViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_rv_home, parent, false)
         return TransactionViewHolder(itemView)
     }
 
     override fun onBindViewHolder(
-        holder: TransactionsAdapter.TransactionViewHolder,
+        holder: TransactionViewHolder,
         position: Int
     ) {
         val transaction = transactions[position]
