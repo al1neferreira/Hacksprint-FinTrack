@@ -4,12 +4,19 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.fintrack.R
+import com.example.fintrack.data.local.ExpenseDatabase
 import com.example.fintrack.databinding.ActivityDetailBinding
 import com.example.fintrack.fragments.EditExpenseFragment
+import com.example.fintrack.repository.ExpenseRepository
+import com.example.fintrack.viewModel.ExpenseViewModel
+import com.example.fintrack.viewModel.ExpenseViewModelFactory
 
 
 class DetailActivity : AppCompatActivity() {
+
+    private lateinit var expenseViewModel: ExpenseViewModel
 
     private lateinit var binding: ActivityDetailBinding
 
@@ -24,6 +31,14 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setupEditExpense()
+        setupViewModel()
+
+    }
+
+    private fun setupViewModel(){
+        val expenseRepository = ExpenseRepository(ExpenseDatabase(this))
+        val viewModelProviderFactory = ExpenseViewModelFactory(application, expenseRepository)
+        expenseViewModel = ViewModelProvider(this, viewModelProviderFactory)[ExpenseViewModel::class.java]
 
     }
 

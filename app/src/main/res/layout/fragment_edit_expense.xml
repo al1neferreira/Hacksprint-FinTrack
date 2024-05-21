@@ -85,19 +85,19 @@
             android:id="@+id/datePicker_edit_expense"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="268dp"
+            android:layout_marginTop="272dp"
             android:calendarViewShown="false"
             android:datePickerMode="spinner"
             android:dayOfWeekTextAppearance="@color/blue_500"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintHorizontal_bias="0.47"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="27dp"
+            android:layout_marginStart="28dp"
             android:layout_marginTop="21dp"
             android:layout_marginBottom="410dp"
             android:text="Date"
@@ -106,7 +106,8 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner_categories" />
+            app:layout_constraintTop_toBottomOf="@+id/spinner_categories"
+            app:layout_constraintVertical_bias="0.022" />
 
         <Spinner
             android:id="@+id/spinner_colors"
@@ -120,9 +121,10 @@
             android:background="@drawable/medium_yellow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_color"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/tv_color"
@@ -169,14 +171,15 @@
             android:background="@drawable/spinner_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/datePicker_edit_expense"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.491" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_create_expense"
             android:layout_width="310dp"
-            android:layout_height="0dp"
+            android:layout_height="60dp"
             android:layout_marginTop="575dp"
             android:layout_marginBottom="36dp"
             android:backgroundTint="@color/blue_500"
@@ -185,8 +188,10 @@
             app:cornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.731"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,14 +5,21 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fintrack.R
 import com.example.fintrack.adapter.TransactionsAdapter
+import com.example.fintrack.data.local.ExpenseDatabase
 import com.example.fintrack.databinding.ActivityHomeBinding
 import com.example.fintrack.fragments.CreateExpenseFragment
 import com.example.fintrack.model.Transactions
+import com.example.fintrack.repository.ExpenseRepository
+import com.example.fintrack.viewModel.ExpenseViewModel
+import com.example.fintrack.viewModel.ExpenseViewModelFactory
 
 class HomeActivity : AppCompatActivity() {
+
+    private lateinit var expenseViewModel: ExpenseViewModel
 
     private lateinit var binding: ActivityHomeBinding
     private lateinit var recyclerView: RecyclerView
@@ -37,6 +44,14 @@ class HomeActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         setupNewExpense()
+        setupViewModel()
+
+    }
+
+    private fun setupViewModel(){
+        val expenseRepository = ExpenseRepository(ExpenseDatabase(this))
+        val viewModelProviderFactory = ExpenseViewModelFactory(application, expenseRepository)
+       expenseViewModel = ViewModelProvider(this, viewModelProviderFactory)[ExpenseViewModel::class.java]
 
     }
 
