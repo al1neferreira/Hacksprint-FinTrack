@@ -3,41 +3,39 @@ package com.example.fintrack.home
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.Observer
 import com.example.fintrack.R
 import com.example.fintrack.adapter.TransactionsAdapter
 import com.example.fintrack.databinding.ActivityHomeBinding
 import com.example.fintrack.fragments.CreateExpenseFragment
-import com.example.fintrack.model.Transactions
 
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
-    private lateinit var recyclerView: RecyclerView
+    private val homeViewModel: HomeViewModel by viewModels()
+    private lateinit var adapter: TransactionsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        binding = ActivityHomeBinding.inflate(layoutInflater)
-        val view = binding.root
         super.onCreate(savedInstanceState)
-        setContentView(view)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar_home)
         setSupportActionBar(toolbar)
 
-        recyclerView = findViewById(R.id.rv_transactions)
-
-        val transactions = listOf(
-            Transactions("Market", "Food", "R$50,00", "17-05-2024", "ic_food"),
-            Transactions("Gasoline", "Transportation", "R$30,00", "16-05-2024", "ic_car")
-        )
-
-        val adapter = TransactionsAdapter(transactions)
-        recyclerView.adapter = adapter
+        adapter = TransactionsAdapter(emptyList())
+        binding.rvTransactions.adapter = adapter
 
         setupNewExpense()
 
+        homeViewModel.expenseData.observe(this, Observer { expenses ->
+            expenses?.let {
+                adapter.updateTransactions(it)
+            }
+        })
     }
 
     private fun setupNewExpense() {
@@ -58,14 +56,8 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.menu_more -> {
-                true
-            }
-
-            R.id.menu_light -> {
-                true
-            }
-
+            R.id.menu_more -> true
+            R.id.menu_light -> true
             else -> super.onOptionsItemSelected(item)
         }
     }

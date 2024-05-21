@@ -14,7 +14,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.fintrack.R
 import com.example.fintrack.adapter.ColorSpinnerAdapter
 import com.example.fintrack.databinding.FragmentEditExpenseBinding
-import com.example.fintrack.model.ColorObject
+import com.example.fintrack.model.ColorTransaction
 import com.example.fintrack.util.ColorList
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -27,7 +27,7 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
 
     private var editExpenseBinding: FragmentEditExpenseBinding? = null
     private val binding get() = editExpenseBinding!!
-    private lateinit var selectedColor: ColorObject
+    private lateinit var selectedColorTransaction: ColorTransaction
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +35,10 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
     }
 
     private fun loadColorSpinnerEditExpense() {
-        selectedColor = ColorList().defaultColor
+        selectedColorTransaction = ColorList().defaultColorTransaction
         binding.spinnerColors.apply {
             adapter = ColorSpinnerAdapter(requireContext(), ColorList().basicColor())
-            setSelection(ColorList().colorPosition(selectedColor), false)
+            setSelection(ColorList().colorPosition(selectedColorTransaction), false)
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -46,7 +46,7 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
                     position: Int,
                     id: Long
                 ) {
-                    selectedColor = ColorList().basicColor()[position]
+                    selectedColorTransaction = ColorList().basicColor()[position]
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}

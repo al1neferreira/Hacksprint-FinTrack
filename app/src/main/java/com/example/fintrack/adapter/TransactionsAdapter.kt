@@ -1,5 +1,7 @@
 package com.example.fintrack.adapter
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,9 +9,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fintrack.R
-import com.example.fintrack.model.Transactions
+import com.example.fintrack.model.Transaction
 
-class TransactionsAdapter(private val transactions: List<Transactions>) :
+class TransactionsAdapter(private var transactions: List<Transaction>) :
     RecyclerView.Adapter<TransactionsAdapter.TransactionViewHolder>() {
 
     class TransactionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -18,11 +20,12 @@ class TransactionsAdapter(private val transactions: List<Transactions>) :
         val textViewCategory: TextView = itemView.findViewById(R.id.tv_category)
         val textViewAmount: TextView = itemView.findViewById(R.id.tv_amount)
         val textViewDate: TextView = itemView.findViewById(R.id.tv_date)
+        val viewColor: View = itemView.findViewById(R.id.color_bar)
     }
 
     private fun getCategoryIcon(category: String): Int {
         return when (category) {
-            "Transportation" -> R.drawable.ic_car
+            "Transport" -> R.drawable.ic_car
             "Clothe" -> R.drawable.ic_clothes
             "Credit card" -> R.drawable.ic_credit_card
             "Electricity" -> R.drawable.ic_electricity
@@ -31,34 +34,32 @@ class TransactionsAdapter(private val transactions: List<Transactions>) :
             "Home" -> R.drawable.ic_home
             "Game control" -> R.drawable.ic_game_control
             "Food" -> R.drawable.ic_food
-
             else -> R.drawable.ic_loading
         }
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): TransactionViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_rv_home, parent, false)
         return TransactionViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(
-        holder: TransactionViewHolder,
-        position: Int
-    ) {
+    override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
         val transaction = transactions[position]
         holder.imageViewCategory.setImageResource(getCategoryIcon(transaction.category))
         holder.textViewTitle.text = transaction.title
         holder.textViewCategory.text = transaction.category
         holder.textViewAmount.text = transaction.amount
         holder.textViewDate.text = transaction.date
+        holder.viewColor.backgroundTintList = ColorStateList.valueOf(Color.parseColor(transaction.colorTransaction.hexHash))
     }
 
     override fun getItemCount(): Int {
         return transactions.size
     }
-}
 
+    fun updateTransactions(newTransactions: List<Transaction>) {
+        this.transactions = newTransactions
+        notifyDataSetChanged()
+    }
+}

@@ -56,6 +56,8 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/edit_text_shape"
             android:hint="Enter the title"
+            android:textColorHint="@color/black"
+            android:gravity=""
             android:inputType="text"
             android:padding="12dp"
             android:textSize="14sp"
@@ -78,7 +80,7 @@
             app:layout_constraintTop_toBottomOf="@+id/edt_title_modal" />
 
         <com.skydoves.powerspinner.PowerSpinnerView
-            android:id="@+id/psw_category"
+            android:id="@+id/psv_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -113,7 +115,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/psw_category" />
+            app:layout_constraintTop_toBottomOf="@+id/psv_category" />
 
         <Spinner
             android:id="@+id/spinner_colors"
@@ -158,7 +160,8 @@
                     android:layout_marginTop="4dp"
                     android:background="@drawable/edit_text_shape"
                     android:hint="Enter the price"
-                    android:inputType="number"
+                    android:textColorHint="@color/black"
+                    android:inputType="numberDecimal"
                     android:padding="12dp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -192,6 +195,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:src="@drawable/ic_calendar" />
+
                 </LinearLayout>
 
                 <EditText
@@ -200,6 +204,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/edit_text_shape"
                     android:hint="MM/DD/YYYY"
+                    android:textColorHint="@color/black"
                     android:inputType="date"
                     android:padding="12dp"
                     android:textAlignment="textEnd"
