@@ -1,13 +1,11 @@
 package com.example.fintrack.home
 
 import android.os.Bundle
-import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.fintrack.R
 import com.example.fintrack.databinding.ActivityDetailBinding
-import com.example.fintrack.fragments.CreatExpenseFragment
 import com.example.fintrack.fragments.EditExpenseFragment
 
 
@@ -25,6 +23,19 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        setupEditExpense()
+
+    }
+
+    private fun setupEditExpense() {
+        binding.btnEditDetail.setOnClickListener {
+            openModalEditExpense()
+        }
+    }
+
+    private fun openModalEditExpense() {
+        val dialog = EditExpenseFragment()
+        dialog.show(supportFragmentManager, "CreateExpenseFragment")
     }
 
 
@@ -38,14 +49,15 @@ class DetailActivity : AppCompatActivity() {
             R.id.menu_delete -> {
                 true
             }
+
             R.id.menu_share -> {
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
 
 
     }
-
 
 }
