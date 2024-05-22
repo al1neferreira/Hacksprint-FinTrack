@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.fintrack.model.Transactions
+import com.example.fintrack.model.Transaction
 import java.util.concurrent.locks.Lock
 
-@Database(entities = [Transactions::class], version = 1)
+@Database(entities = [Transaction::class], version = 1)
 abstract class ExpenseDatabase : RoomDatabase() {
 
     abstract fun getExpenseDao(): ExpenseDao

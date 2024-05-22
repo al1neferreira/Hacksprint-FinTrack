@@ -51,7 +51,7 @@ class TransactionsAdapter(private var transactions: List<Transaction>) :
         holder.textViewCategory.text = transaction.category
         holder.textViewAmount.text = transaction.amount
         holder.textViewDate.text = transaction.date
-        holder.viewColor.backgroundTintList = ColorStateList.valueOf(Color.parseColor(transaction.colorTransaction.hexHash))
+        holder.viewColor.backgroundTintList = ColorStateList.valueOf(Color.parseColor(transaction.colorTransaction?.hexHash))
     }
 
     override fun getItemCount(): Int {
