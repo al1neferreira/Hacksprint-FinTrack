@@ -1,6 +1,6 @@
 package com.example.fintrack.repository
 
-import androidx.room.RawQuery
+
 import com.example.fintrack.data.local.ExpenseDatabase
 import com.example.fintrack.model.Transaction
 

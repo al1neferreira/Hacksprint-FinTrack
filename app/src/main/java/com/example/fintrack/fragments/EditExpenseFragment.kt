@@ -16,6 +16,8 @@ import androidx.fragment.app.DialogFragment
 import com.example.fintrack.R
 import com.example.fintrack.adapter.ColorSpinnerAdapter
 import com.example.fintrack.databinding.FragmentEditExpenseBinding
+import com.example.fintrack.home.DetailActivity
+import com.example.fintrack.home.HomeActivity
 import com.example.fintrack.model.ColorTransaction
 import com.example.fintrack.model.Transaction
 import com.example.fintrack.util.ColorList
