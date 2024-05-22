@@ -76,4 +76,7 @@ dependencies {
     //PowerSpinner
     implementation ("com.github.skydoves:powerspinner:1.2.7")
 
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
+    implementation ("androidx.fragment:fragment-ktx:1.4.1")
+
 }

@@ -10,24 +10,30 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.AdapterView
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import com.example.fintrack.R
 import com.example.fintrack.adapter.ColorSpinnerAdapter
 import com.example.fintrack.databinding.FragmentCreatExpenseBinding
-import com.example.fintrack.model.ColorObject
+import com.example.fintrack.home.HomeViewModel
+import com.example.fintrack.model.ColorTransaction
+import com.example.fintrack.model.Transaction
 import com.example.fintrack.util.ColorList
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
+import com.skydoves.powerspinner.PowerSpinnerView
 import java.util.Calendar
 
 class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), MenuProvider {
 
     private var creatExpenseBinding: FragmentCreatExpenseBinding? = null
     private val binding get() = creatExpenseBinding!!
-    private lateinit var selectedColor: ColorObject
+    private lateinit var selectedColorTransaction: ColorTransaction
+    private val homeViewModel: HomeViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +41,10 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
     }
 
     private fun loadColorSpinner() {
-        selectedColor = ColorList().defaultColor
+        selectedColorTransaction = ColorList().defaultColorTransaction
         binding.spinnerColors.apply {
             adapter = ColorSpinnerAdapter(requireContext(), ColorList().basicColor())
-            setSelection(ColorList().colorPosition(selectedColor), false)
+            setSelection(ColorList().colorPosition(selectedColorTransaction), false)
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -46,7 +52,7 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
                     position: Int,
                     id: Long
                 ) {
-                    selectedColor = ColorList().basicColor()[position]
+                    selectedColorTransaction = ColorList().basicColor()[position]
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -68,7 +74,7 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
             "Game control",
             "Others"
         )
-        binding.pswCategory.apply {
+        binding.psvCategory.apply {
             setItems(categories)
             setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String> { oldIndex, oldItem, newIndex, newItem ->
                 Toast.makeText(requireContext(), "$newItem selected!", Toast.LENGTH_SHORT).show()
@@ -85,6 +91,23 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
         val dateEditText = binding.edtDateModal
         val pickDateButton = binding.btnPickDate
         val backButton: ImageView = binding.btnBack
+        val edtTitleModal: EditText = binding.edtTitleModal
+        val psvCategory: PowerSpinnerView = binding.psvCategory
+        val edtPriceModal: EditText = binding.edtPriceModal
+        val btnCreateExpense: Button = binding.btnCreateExpense
+
+        btnCreateExpense.setOnClickListener {
+            val title = edtTitleModal.text.toString()
+            val category = psvCategory.text.toString()
+            val amount = edtPriceModal.text.toString()
+            val date = dateEditText.text.toString()
+            val color = selectedColorTransaction
+
+            val newTransaction = Transaction(title, category, amount, date, color, "")
+            homeViewModel.addExpenseData(newTransaction)
+
+            dismiss()
+        }
 
         pickDateButton.setOnClickListener {
             showDatePicker(dateEditText)

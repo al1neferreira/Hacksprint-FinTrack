@@ -1,37 +1,37 @@
 package com.example.fintrack.util
 
-import com.example.fintrack.model.ColorObject
+import com.example.fintrack.model.ColorTransaction
 
 class ColorList {
     private val blackHex = "000000"
     private val whiteHex = "FFFFFF"
 
-    val defaultColor: ColorObject = basicColor()[0]
+    val defaultColorTransaction: ColorTransaction = basicColor()[0]
 
-    fun colorPosition(colorObject: ColorObject): Int {
+    fun colorPosition(colorTransaction: ColorTransaction): Int {
         for(i in basicColor().indices){
-            if(colorObject == basicColor()[i])
+            if(colorTransaction == basicColor()[i])
                 return i
         }
         return 0
     }
 
-    fun basicColor(): List<ColorObject>{
+    fun basicColor(): List<ColorTransaction>{
         return listOf(
-            ColorObject("Black", blackHex, whiteHex),
-            ColorObject("Silver", "C0C0C0", blackHex),
-            ColorObject("Gray", "808080", whiteHex),
-            ColorObject("Maroon", "800000", whiteHex),
-            ColorObject("Red", "FF0000", whiteHex),
-            ColorObject("Fuchsia", "FF00FF", whiteHex),
-            ColorObject("Green", "008000", whiteHex),
-            ColorObject("Lime", "00FF00", blackHex),
-            ColorObject("Olive", "808000", whiteHex),
-            ColorObject("Yellow", "FFFF00", blackHex),
-            ColorObject("Navy", "000080", whiteHex),
-            ColorObject("Blue", "0000FF", whiteHex),
-            ColorObject("Teal", "008080", whiteHex),
-            ColorObject("Aqua", "00FFFF", blackHex)
+            ColorTransaction("Black", blackHex, whiteHex),
+            ColorTransaction("Silver", "C0C0C0", blackHex),
+            ColorTransaction("Gray", "808080", whiteHex),
+            ColorTransaction("Maroon", "800000", whiteHex),
+            ColorTransaction("Red", "FF0000", whiteHex),
+            ColorTransaction("Fuchsia", "FF00FF", whiteHex),
+            ColorTransaction("Green", "008000", whiteHex),
+            ColorTransaction("Lime", "00FF00", blackHex),
+            ColorTransaction("Olive", "808000", whiteHex),
+            ColorTransaction("Yellow", "FFFF00", blackHex),
+            ColorTransaction("Navy", "000080", whiteHex),
+            ColorTransaction("Blue", "0000FF", whiteHex),
+            ColorTransaction("Teal", "008080", whiteHex),
+            ColorTransaction("Aqua", "00FFFF", blackHex)
         )
     }
 }

@@ -4,10 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.fintrack.model.Transactions
-import java.util.concurrent.locks.Lock
+import androidx.room.TypeConverters
+import com.example.fintrack.model.ColorTransactionConverter
+import com.example.fintrack.model.Transaction
 
-@Database(entities = [Transactions::class], version = 1)
+@Database(entities = [Transaction::class], version = 1)
+@TypeConverters(ColorTransactionConverter::class)
 abstract class ExpenseDatabase : RoomDatabase() {
 
     abstract fun getExpenseDao(): ExpenseDao
@@ -22,7 +24,7 @@ abstract class ExpenseDatabase : RoomDatabase() {
                 createDatabase(context).also {
                     instance = it
                 }
-        }
+            }
 
         private fun createDatabase(context: Context) =
             Room.databaseBuilder(

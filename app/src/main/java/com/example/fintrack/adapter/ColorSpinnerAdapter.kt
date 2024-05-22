@@ -8,10 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.example.fintrack.model.ColorObject
 import com.example.fintrack.R
 
-class ColorSpinnerAdapter(context: Context, list: List<ColorObject>): ArrayAdapter<ColorObject>(context, 0, list) {
+class ColorSpinnerAdapter(context: Context, list: List<com.example.fintrack.model.ColorTransaction>): ArrayAdapter<com.example.fintrack.model.ColorTransaction>(context, 0, list) {
     private var layoutInflater = LayoutInflater.from(context)
 
     @SuppressLint("ViewHolder", "InflateParams")
@@ -28,20 +27,20 @@ class ColorSpinnerAdapter(context: Context, list: List<ColorObject>): ArrayAdapt
     }
 
     private fun view(view: View, position: Int): View {
-        val colorObject: ColorObject = getItem(position) ?: return view
+        val colorTransaction: com.example.fintrack.model.ColorTransaction = getItem(position) ?: return view
 
         val colorNameItem = view.findViewById<TextView>(R.id.colorName)
         val colorHexItem = view.findViewById<TextView>(R.id.colorHex)
         val colorNameBG = view.findViewById<TextView>(R.id.colorNameBG)
         val colorBlob = view. findViewById<View>(R.id.colorBlob)
 
-        colorNameBG?.text = colorObject.name
-        colorNameBG?.setTextColor(Color.parseColor(colorObject.constrastHexHash))
+        colorNameBG?.text = colorTransaction.name
+        colorNameBG?.setTextColor(Color.parseColor(colorTransaction.constrastHexHash))
 
-        colorNameItem?.text = colorObject.name
-        colorNameItem?.text = colorObject.hex
+        colorNameItem?.text = colorTransaction.name
+        colorNameItem?.text = colorTransaction.hex
 
-        colorBlob?.background?.setTint(Color.parseColor(colorObject.hexHash))
+        colorBlob?.background?.setTint(Color.parseColor(colorTransaction.hexHash))
 
         return view
     }

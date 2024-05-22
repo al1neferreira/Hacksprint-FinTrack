@@ -16,8 +16,8 @@ import androidx.fragment.app.DialogFragment
 import com.example.fintrack.R
 import com.example.fintrack.adapter.ColorSpinnerAdapter
 import com.example.fintrack.databinding.FragmentEditExpenseBinding
-import com.example.fintrack.model.ColorObject
-import com.example.fintrack.model.Transactions
+import com.example.fintrack.model.ColorTransaction
+import com.example.fintrack.model.Transaction
 import com.example.fintrack.util.ColorList
 import com.example.fintrack.viewModel.ExpenseViewModel
 import com.google.android.material.datepicker.CalendarConstraints
@@ -31,10 +31,10 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
 
     private var editExpenseBinding: FragmentEditExpenseBinding? = null
     private val binding get() = editExpenseBinding!!
-    private lateinit var selectedColor: ColorObject
+    private lateinit var selectedColor: ColorTransaction
 
     private lateinit var expenseViewModel: ExpenseViewModel
-    private lateinit var currentTransaction: Transactions
+    private lateinit var currentTransaction: Transaction
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +42,7 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
     }
 
     private fun loadColorSpinnerEditExpense() {
-        selectedColor = ColorList().defaultColor
+        selectedColor = ColorList().defaultColorTransaction
         binding.spinnerColors.apply {
             adapter = ColorSpinnerAdapter(requireContext(), ColorList().basicColor())
             setSelection(ColorList().colorPosition(selectedColor), false)
