@@ -1,5 +1,6 @@
 package com.example.fintrack.fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.DialogFragment
@@ -62,6 +64,7 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,11 +75,18 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
         selectedDatePicker()
         loadColorSpinnerEditExpense()
 
-        binding.titleEdit
+        binding.tvEditTitle.setText(currentTransaction.title)
+        binding.spinnerCategoriesEdit.setSelection(0, true)
+        binding.datePickerEditExpense.setOnDateChangedListener { view, year, monthOfYear, dayOfMonth ->
+            val date = Calendar.getInstance().apply {
+                set(year, monthOfYear, dayOfMonth)
+            }.time.date
+
+        }
 
         return binding.root
-
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -123,11 +133,11 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
 
     }
 
-    private fun deleteExpense(){
+    private fun deleteExpense() {
         AlertDialog.Builder(requireActivity()).apply {
             setTitle("Delete Expense")
             setMessage("Do you want to delete this expense?")
-            setPositiveButton("Delete"){ _,_ ->
+            setPositiveButton("Delete") { _, _ ->
                 expenseViewModel.deleteExpense(currentTransaction)
                 Toast.makeText(context, "Expense Deleted", Toast.LENGTH_SHORT).show()
 
