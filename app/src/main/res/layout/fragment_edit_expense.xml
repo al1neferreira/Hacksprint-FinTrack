@@ -18,7 +18,7 @@
             android:id="@+id/tv_name_modal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="28dp"
             android:text="Edit an Outcome"
             android:textColor="@color/black"
             android:textSize="16sp"
@@ -27,56 +27,61 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_title_modal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Title"
-            android:textColor="@color/grey"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.083"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name_modal" />
-
         <EditText
-            android:id="@+id/title_edit"
+            android:id="@+id/tv_edit_title"
             android:layout_width="300dp"
             android:layout_height="40dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="84dp"
             android:background="@drawable/edit_text_shape"
             android:hint="Edit the title"
             android:inputType="text"
             android:padding="12dp"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.607"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title_modal" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_name_modal" />
+
+        <TextView
+            android:id="@+id/tv_title_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="52dp"
+            android:layout_marginEnd="292dp"
+            android:text="Title"
+            android:textColor="@color/grey"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name_modal" />
 
         <TextView
             android:id="@+id/tv_category_modal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="84dp"
+            android:layout_marginEnd="263dp"
             android:text="Category"
             android:textColor="@color/grey"
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.089"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_edit" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_edit" />
 
         <Spinner
-            android:id="@+id/spinner_categories"
+            android:id="@+id/spinner_categories_edit"
             android:layout_width="300dp"
             android:layout_height="40dp"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="12dp"
             android:background="@drawable/spinner_background"
             android:spinnerMode="dropdown"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.411"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_category_modal" />
 
@@ -85,12 +90,11 @@
             android:id="@+id/datePicker_edit_expense"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="272dp"
+            android:layout_marginTop="320dp"
             android:calendarViewShown="false"
             android:datePickerMode="spinner"
             android:dayOfWeekTextAppearance="@color/blue_500"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.47"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -98,16 +102,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
-            android:layout_marginTop="21dp"
-            android:layout_marginBottom="410dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="290dp"
             android:text="Date"
             android:textColor="@color/grey"
             android:textSize="15sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner_categories"
-            app:layout_constraintVertical_bias="0.022" />
+            app:layout_constraintTop_toBottomOf="@+id/spinner_categories_edit" />
 
         <Spinner
             android:id="@+id/spinner_colors"
@@ -150,18 +153,20 @@
             android:layout_gravity="center"
             android:layout_marginStart="124dp"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="131dp"
             android:layout_marginBottom="8dp"
             android:text="Icon"
             android:textColor="@color/grey"
             android:textSize="15sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/spinner_edit_icon"
+            app:layout_constraintBottom_toTopOf="@+id/spinner_edit"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_color"
             app:layout_constraintTop_toBottomOf="@+id/datePicker_edit_expense"
             app:layout_constraintVertical_bias="0.933" />
 
         <Spinner
-            android:id="@+id/spinner_edit_icon"
+            android:id="@+id/spinner_edit"
             android:layout_width="140dp"
             android:layout_height="35dp"
             android:layout_marginStart="191dp"
@@ -171,27 +176,23 @@
             android:background="@drawable/spinner_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/datePicker_edit_expense"
-            app:layout_constraintVertical_bias="0.491" />
+            app:layout_constraintVertical_bias="0.28" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_create_expense"
             android:layout_width="310dp"
             android:layout_height="60dp"
-            android:layout_marginTop="575dp"
-            android:layout_marginBottom="36dp"
+            android:layout_marginBottom="96dp"
             android:backgroundTint="@color/blue_500"
             android:text="DONE"
             android:textStyle="bold"
             app:cornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.731"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintStart_toStartOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
