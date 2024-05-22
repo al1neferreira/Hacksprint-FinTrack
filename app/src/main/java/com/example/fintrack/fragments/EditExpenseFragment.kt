@@ -9,13 +9,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.AdapterView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.DialogFragment
 import com.example.fintrack.R
 import com.example.fintrack.adapter.ColorSpinnerAdapter
 import com.example.fintrack.databinding.FragmentEditExpenseBinding
 import com.example.fintrack.model.ColorTransaction
+import com.example.fintrack.model.Transactions
 import com.example.fintrack.util.ColorList
+import com.example.fintrack.viewModel.ExpenseViewModel
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
@@ -27,7 +31,10 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
 
     private var editExpenseBinding: FragmentEditExpenseBinding? = null
     private val binding get() = editExpenseBinding!!
-    private lateinit var selectedColorTransaction: ColorTransaction
+    private lateinit var selectedColor: ColorTransaction
+
+    private lateinit var expenseViewModel: ExpenseViewModel
+    private lateinit var currentTransaction: Transactions
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +42,10 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
     }
 
     private fun loadColorSpinnerEditExpense() {
-        selectedColorTransaction = ColorList().defaultColorTransaction
+        selectedColor = ColorList().defaultColorTransaction
         binding.spinnerColors.apply {
             adapter = ColorSpinnerAdapter(requireContext(), ColorList().basicColor())
-            setSelection(ColorList().colorPosition(selectedColorTransaction), false)
+            setSelection(ColorList().colorPosition(selectedColor), false)
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -46,7 +53,7 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
                     position: Int,
                     id: Long
                 ) {
-                    selectedColorTransaction = ColorList().basicColor()[position]
+                    selectedColor = ColorList().basicColor()[position]
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -113,18 +120,43 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
 
 
     }
+
+    private fun deleteExpense(){
+        AlertDialog.Builder(requireActivity()).apply {
+            setTitle("Delete Expense")
+            setMessage("Do you want to delete this expense?")
+            setPositiveButton("Delete"){ _,_ ->
+                expenseViewModel.deleteExpense(currentTransaction)
+                Toast.makeText(context, "Expense Deleted", Toast.LENGTH_SHORT).show()
+
+            }
+            setNegativeButton("Cancel", null)
+        }.create().show()
+
+    }
+
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menu.clear()
+        menuInflater.inflate(R.menu.menu_detail, menu)
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        return when (menuItem.itemId) {
+            R.id.menu_delete -> {
+                deleteExpense()
+                true
+            }
+
+            else -> false
+        }
+
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         editExpenseBinding = null
     }
 
-
-    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        TODO("Not yet implemented")
-    }
 
 }
