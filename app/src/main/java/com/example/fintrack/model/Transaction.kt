@@ -1,11 +1,14 @@
 package com.example.fintrack.model
 
-data class Transaction(
+import androidx.room.Entity
+
+@Entity
+data class Transactions(
     val title: String,
     val category: String,
     val amount: String,
     val date: String,
-    val colorTransaction: ColorTransaction,
+    val colorTransaction: ColorTransaction? = null,
     val image: String
 ) {
 }

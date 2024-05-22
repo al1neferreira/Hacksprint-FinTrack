@@ -22,7 +22,7 @@ import com.example.fintrack.adapter.ColorSpinnerAdapter
 import com.example.fintrack.databinding.FragmentCreatExpenseBinding
 import com.example.fintrack.home.HomeViewModel
 import com.example.fintrack.model.ColorTransaction
-import com.example.fintrack.model.Transaction
+import com.example.fintrack.model.Transactions
 import com.example.fintrack.util.ColorList
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import com.skydoves.powerspinner.PowerSpinnerView
@@ -103,7 +103,7 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
             val date = dateEditText.text.toString()
             val color = selectedColorTransaction
 
-            val newTransaction = Transaction(title, category, amount, date, color, "")
+            val newTransaction = Transactions(title, category, amount, date, color, "")
             homeViewModel.addExpenseData(newTransaction)
 
             dismiss()
