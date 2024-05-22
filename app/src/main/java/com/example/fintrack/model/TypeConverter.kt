@@ -1,7 +1,6 @@
-package com.example.fintrack
+package com.example.fintrack.model
 
 import androidx.room.TypeConverter
-import com.example.fintrack.model.ColorTransaction
 
 class ColorTransactionConverter {
     @TypeConverter
