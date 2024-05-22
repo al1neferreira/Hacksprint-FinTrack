@@ -23,7 +23,7 @@ interface ExpenseDao {
     @Query("SELECT * FROM EXPENSE ORDER BY amount DESC")
     fun getAllExpenses(): LiveData<List<Transaction>>
 
-    @Query("select *FROM Expense WHERE title LIKE :query OR category LIKE :query")
+    @Query("SELECT * FROM EXPENSE WHERE title LIKE :query OR category LIKE :query")
     fun searchExpense(query: String?): LiveData<List<Transaction>>
 
 

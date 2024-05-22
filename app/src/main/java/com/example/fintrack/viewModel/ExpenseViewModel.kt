@@ -3,18 +3,18 @@ package com.example.fintrack.viewModel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.fintrack.model.Transactions
+import com.example.fintrack.model.Transaction
 import com.example.fintrack.repository.ExpenseRepository
 import kotlinx.coroutines.launch
 
 class ExpenseViewModel(app:Application,private val expenseRepository: ExpenseRepository):AndroidViewModel(app) {
 
-    fun addExpense(transactions: Transactions)=
+    fun addExpense(transactions: Transaction)=
         viewModelScope.launch {
             expenseRepository.createExpense(transactions)
         }
 
-    fun deleteExpense(transactions: Transactions) =
+    fun deleteExpense(transactions: Transaction) =
         viewModelScope.launch {
             expenseRepository.updateExpense(transactions)
         }
