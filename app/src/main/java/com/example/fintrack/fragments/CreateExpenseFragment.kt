@@ -96,6 +96,8 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
         val edtPriceModal: EditText = binding.edtPriceModal
         val btnCreateExpense: Button = binding.btnCreateExpense
 
+        edtPriceModal.addTextChangedListener(PriceFormatWatcher(edtPriceModal))
+
         btnCreateExpense.setOnClickListener {
             val title = edtTitleModal.text.toString()
             val category = psvCategory.text.toString()
@@ -103,7 +105,7 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
             val date = dateEditText.text.toString()
             val color = selectedColorTransaction
 
-            val newTransaction = Transaction(title, category, amount, date, color, "")
+            val newTransaction = Transaction(title, category, amount, date, color, "", id)
             homeViewModel.addExpenseData(newTransaction)
 
             dismiss()

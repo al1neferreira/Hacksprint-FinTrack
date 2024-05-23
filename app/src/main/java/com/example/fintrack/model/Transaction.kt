@@ -7,11 +7,11 @@ import androidx.room.PrimaryKey
 
 data class Transaction(
     @PrimaryKey
-    val id:Int,
     val title: String,
     val category: String,
     val amount: String,
     val date: String,
     val colorTransaction: ColorTransaction,
-    val image: String
+    val image: String,
+    val id:Int
 )
