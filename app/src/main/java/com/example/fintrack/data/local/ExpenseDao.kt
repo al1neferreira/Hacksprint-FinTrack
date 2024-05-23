@@ -26,5 +26,8 @@ interface ExpenseDao {
     @Query("SELECT * FROM EXPENSE WHERE id LIKE :query")
     fun searchExpense(query: String?): LiveData<List<Transaction>>
 
+    @Query("SELECT * FROM EXPENSE WHERE category LIKE :query")
+    fun searchCategory(query: String?):LiveData<List<Transaction>>
+
 
 }
