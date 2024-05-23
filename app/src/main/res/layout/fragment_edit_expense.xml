@@ -33,7 +33,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="84dp"
             android:background="@drawable/edit_text_shape"
-            android:hint="Edit the title"
+            android:hint="Edit title"
             android:inputType="text"
             android:padding="12dp"
             android:textSize="15sp"
@@ -73,18 +73,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_title_edit" />
 
-        <Spinner
-            android:id="@+id/spinner_categories_edit"
+
+        <com.skydoves.powerspinner.PowerSpinnerView
+            android:id="@+id/spinner_edit_categories"
             android:layout_width="300dp"
             android:layout_height="40dp"
+            android:layout_marginStart="28dp"
             android:layout_marginTop="12dp"
+            android:layout_marginEnd="23dp"
             android:background="@drawable/spinner_background"
+            android:gravity="center|start"
+            android:hint="Select a category"
+            android:padding="10dp"
             android:spinnerMode="dropdown"
+            app:spinner_divider_show="true"
+            app:spinner_divider_size="0.4dp"
+            app:spinner_item_height="46dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.411"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_category_modal" />
-
+            app:layout_constraintTop_toBottomOf="@+id/tv_category_modal"
+            app:spinner_popup_animation="bounce"
+            app:spinner_popup_background="@color/gray_200"
+            app:spinner_popup_elevation="14dp"
+            app:spinner_selected_item_background="@color/blue_500"/>
 
         <DatePicker
             android:id="@+id/datePicker_edit_expense"
@@ -102,32 +113,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="290dp"
             android:text="Date"
             android:textColor="@color/grey"
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner_categories_edit" />
+            app:layout_constraintTop_toBottomOf="@+id/spinner_edit_categories" />
 
         <Spinner
-            android:id="@+id/spinner_colors"
+            android:id="@+id/spinner_edit_colors"
             android:layout_width="140dp"
             android:layout_height="35dp"
             android:layout_gravity="center"
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="187dp"
-            android:layout_marginBottom="119dp"
             android:background="@drawable/medium_yellow"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:gravity="center"
+            android:hint="Select a color"
+            android:spinnerMode="dropdown"
+            app:spinner_divider_show="true"
+            app:spinner_divider_size="0.4dp"
+            app:spinner_item_height="46dp"
+            app:spinner_popup_animation="fade"
+            app:spinner_popup_background="@color/gray_200"
+            app:spinner_popup_elevation="14dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_color"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_color" />
 
         <TextView
             android:id="@+id/tv_color"
@@ -146,43 +163,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_price_modal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="124dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="131dp"
-            android:layout_marginBottom="8dp"
-            android:text="Icon"
-            android:textColor="@color/grey"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/spinner_edit"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_color"
-            app:layout_constraintTop_toBottomOf="@+id/datePicker_edit_expense"
-            app:layout_constraintVertical_bias="0.933" />
-
-        <Spinner
-            android:id="@+id/spinner_edit"
-            android:layout_width="140dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="191dp"
-            android:layout_marginTop="43dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="119dp"
-            android:background="@drawable/spinner_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/datePicker_edit_expense"
-            app:layout_constraintVertical_bias="0.28" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_create_expense"
+            android:id="@+id/btn_update_detail"
             android:layout_width="310dp"
             android:layout_height="60dp"
             android:layout_marginBottom="96dp"
