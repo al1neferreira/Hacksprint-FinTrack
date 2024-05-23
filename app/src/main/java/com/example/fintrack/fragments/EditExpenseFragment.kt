@@ -24,6 +24,7 @@ import com.example.fintrack.util.ColorList
 import com.example.fintrack.viewModel.ExpenseViewModel
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -37,6 +38,8 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
 
     private lateinit var expenseViewModel: ExpenseViewModel
     private lateinit var currentTransaction: Transaction
+    private val calendar: Calendar = Calendar.getInstance()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +48,7 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
 
     private fun loadColorSpinnerEditExpense() {
         selectedColor = ColorList().defaultColorTransaction
-        binding.spinnerColors.apply {
+        binding.spinnerEditColors.apply {
             adapter = ColorSpinnerAdapter(requireContext(), ColorList().basicColor())
             setSelection(ColorList().colorPosition(selectedColor), false)
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -63,8 +66,29 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
         }
     }
 
+    private fun loadCategorySpinner() {
+        val categories = listOf(
+            "Food",
+            "Transport",
+            "Entertainment",
+            "Health",
+            "Internet",
+            "Home",
+            "Clothe",
+            "Electricity",
+            "Gas station",
+            "Game control",
+            "Others"
+        )
+        binding.spinnerEditCategories.apply {
+            setItems(categories)
+            setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String> { oldIndex, oldItem, newIndex, newItem ->
+                Toast.makeText(requireContext(), "$newItem selected!", Toast.LENGTH_SHORT).show()
+            })
+        }
+    }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -74,17 +98,28 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
 
         selectedDatePicker()
         loadColorSpinnerEditExpense()
+        loadCategorySpinner()
 
-        binding.tvEditTitle.setText(currentTransaction.title)
-        binding.spinnerCategoriesEdit.setSelection(0, true)
-        binding.datePickerEditExpense.setOnDateChangedListener { view, year, monthOfYear, dayOfMonth ->
-            val date = Calendar.getInstance().apply {
-                set(year, monthOfYear, dayOfMonth)
-            }.time.date
+        return binding.root
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.datePickerEditExpense.setOnDateChangedListener { _, year, monthOfYear, dayOfMonth ->
+            calendar.set(Calendar.YEAR, year)
+            calendar.set(Calendar.MONTH, monthOfYear)
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+        }
+
+        binding.btnUpdateDetail.setOnClickListener {
+            val editExpenseTitle = binding.tvEditTitle.text.toString()
+            val editCategory = binding.spinnerEditCategories.toString()
+            val editColor = binding.spinnerEditColors.toString()
 
         }
 
-        return binding.root
     }
 
 
@@ -169,6 +204,5 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
         super.onDestroyView()
         editExpenseBinding = null
     }
-
 
 }

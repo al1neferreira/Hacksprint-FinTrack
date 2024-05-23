@@ -16,7 +16,13 @@ class ExpenseViewModel(app:Application,private val expenseRepository: ExpenseRep
 
     fun deleteExpense(transactions: Transaction) =
         viewModelScope.launch {
+            expenseRepository.deleteExpense(transactions)
+        }
+
+    fun updateExpense(transactions: Transaction) =
+        viewModelScope.launch {
             expenseRepository.updateExpense(transactions)
+
         }
 
     fun getAllExpenses() = expenseRepository.getAllExpenses()
