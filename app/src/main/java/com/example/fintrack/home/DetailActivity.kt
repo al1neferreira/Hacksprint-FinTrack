@@ -15,7 +15,7 @@ import com.example.fintrack.repository.ExpenseRepository
 import com.example.fintrack.viewModel.ExpenseViewModel
 import com.example.fintrack.viewModel.ExpenseViewModelFactory
 
-class DetailActivity() : AppCompatActivity() {
+class DetailActivity: AppCompatActivity() {
 
     private lateinit var expenseViewModel: ExpenseViewModel
     private lateinit var binding: ActivityDetailBinding
@@ -32,15 +32,21 @@ class DetailActivity() : AppCompatActivity() {
         val transaction = intent.getSerializableExtra("TRANSACTION") as? Transaction
         transaction?.let { populateDetails(it) }
 
+
         setupEditExpense()
         setupViewModel()
+
+
         val btnBack = binding.btnBack
 
         btnBack.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         }
+
     }
+
+
 
     private fun populateDetails(transaction: Transaction) {
         binding.tvDescDetail.text = transaction.title
@@ -52,7 +58,8 @@ class DetailActivity() : AppCompatActivity() {
     private fun setupViewModel() {
         val expenseRepository = ExpenseRepository(ExpenseDatabase(this))
         val viewModelProviderFactory = ExpenseViewModelFactory(application, expenseRepository)
-        expenseViewModel = ViewModelProvider(this, viewModelProviderFactory)[ExpenseViewModel::class.java]
+        expenseViewModel =
+            ViewModelProvider(this, viewModelProviderFactory)[ExpenseViewModel::class.java]
     }
 
     private fun setupEditExpense() {
@@ -60,6 +67,7 @@ class DetailActivity() : AppCompatActivity() {
             openModalEditExpense()
         }
     }
+
 
     private fun openModalEditExpense() {
         val dialog = EditExpenseFragment()
@@ -71,15 +79,25 @@ class DetailActivity() : AppCompatActivity() {
         return true
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_delete -> {
                 true
             }
+
             R.id.menu_share -> {
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+
 }
+
+
+
+
+
