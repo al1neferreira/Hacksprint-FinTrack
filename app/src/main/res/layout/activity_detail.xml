@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            android:layout_marginEnd="312dp"
+            android:layout_marginEnd="300dp"
             android:fontFamily="@font/open_sans_regular"
             android:hint="$50"
             android:padding="5dp"
@@ -235,6 +235,18 @@
             app:title="Details"
             app:titleCentered="true"
             app:titleTextAppearance="@style/ToolbarTitleAppearance" />
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_back"
+            android:contentDescription="Back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

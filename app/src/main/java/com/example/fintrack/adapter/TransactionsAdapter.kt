@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fintrack.R
 import com.example.fintrack.model.Transaction
 
-class TransactionsAdapter(private var transactions: List<Transaction>) :
+class TransactionsAdapter(
+    private var transactions: List<Transaction>,
+    private val clickListener: (Transaction) -> Unit) :
     RecyclerView.Adapter<TransactionsAdapter.TransactionViewHolder>() {
 
     class TransactionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -21,6 +23,16 @@ class TransactionsAdapter(private var transactions: List<Transaction>) :
         val textViewAmount: TextView = itemView.findViewById(R.id.tv_amount)
         val textViewDate: TextView = itemView.findViewById(R.id.tv_date)
         val viewColor: View = itemView.findViewById(R.id.color_bar)
+
+        fun bind(transaction: Transaction, clickListener: (Transaction) -> Unit) {
+            textViewTitle.text = transaction.title
+            textViewCategory.text = transaction.category
+            textViewAmount.text = transaction.amount
+            textViewDate.text = transaction.date
+            itemView.setOnClickListener {
+                clickListener(transaction)
+            }
+        }
     }
 
     private fun getCategoryIcon(category: String): Int {
@@ -46,6 +58,7 @@ class TransactionsAdapter(private var transactions: List<Transaction>) :
 
     override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
         val transaction = transactions[position]
+        holder.bind(transaction, clickListener)
         holder.imageViewCategory.setImageResource(getCategoryIcon(transaction.category))
         holder.textViewTitle.text = transaction.title
         holder.textViewCategory.text = transaction.category

@@ -106,16 +106,19 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
             val title = edtTitleModal.text.toString()
             val category = psvCategory.text.toString()
             val amount = edtPriceModal.text.toString()
+            val date = pickDateButton.toString()
             val color = selectedColorTransaction
+            val transactionId = 1
 
-            val date = pickDateButton.setOnDateChangedListener { view, year, monthOfYear, dayOfMonth ->
+            val newTransaction = Transaction(title, category, amount, date, color, "", transactionId)
+
+            val newDate = pickDateButton.setOnDateChangedListener { view, year, monthOfYear, dayOfMonth ->
                showDatePicker(pickDateButton)
 
             }
 
-            val newTransaction = Transaction(title, category, amount, date.toString(), color, "", id)
-            homeViewModel.addExpenseData(newTransaction)
 
+            homeViewModel.addExpenseData(newTransaction)
             dismiss()
         }
 
