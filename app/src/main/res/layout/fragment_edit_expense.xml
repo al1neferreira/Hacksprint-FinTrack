@@ -36,6 +36,7 @@
             android:hint="Edit title"
             android:inputType="text"
             android:padding="12dp"
+            android:textColorHint="@color/grey"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.607"
@@ -46,33 +47,35 @@
             android:id="@+id/tv_title_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="26dp"
             android:layout_marginTop="52dp"
             android:layout_marginEnd="292dp"
             android:text="Title"
             android:textColor="@color/grey"
             android:textSize="15sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tv_edit_title"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name_modal" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_name_modal"
+            app:layout_constraintVertical_bias="0.0" />
+
 
         <TextView
             android:id="@+id/tv_category_modal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="26dp"
-            android:layout_marginTop="84dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="263dp"
             android:text="Category"
             android:textColor="@color/grey"
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title_edit" />
-
+            app:layout_constraintTop_toBottomOf="@+id/tv_edit_title" />
 
         <com.skydoves.powerspinner.PowerSpinnerView
             android:id="@+id/spinner_edit_categories"
@@ -86,16 +89,17 @@
             android:hint="Select a category"
             android:padding="10dp"
             android:spinnerMode="dropdown"
-            app:spinner_divider_show="true"
-            app:spinner_divider_size="0.4dp"
-            app:spinner_item_height="46dp"
+            android:textColorHint="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_category_modal"
+            app:spinner_divider_show="true"
+            app:spinner_divider_size="0.4dp"
+            app:spinner_item_height="46dp"
             app:spinner_popup_animation="bounce"
-            app:spinner_popup_background="@color/gray_200"
+            app:spinner_popup_background="@color/white"
             app:spinner_popup_elevation="14dp"
-            app:spinner_selected_item_background="@color/blue_500"/>
+            app:spinner_selected_item_background="@color/blue_500" />
 
         <DatePicker
             android:id="@+id/datePicker_edit_expense"
@@ -112,7 +116,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
+            android:layout_marginStart="26dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="290dp"
             android:text="Date"
@@ -124,36 +128,39 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinner_edit_categories" />
 
+
         <Spinner
             android:id="@+id/spinner_edit_colors"
             android:layout_width="140dp"
             android:layout_height="35dp"
             android:layout_gravity="center"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="187dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="176dp"
+            android:layout_marginBottom="212dp"
             android:background="@drawable/medium_yellow"
             android:gravity="center"
             android:hint="Select a color"
             android:spinnerMode="dropdown"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_color"
+            app:layout_constraintVertical_bias="0.526"
             app:spinner_divider_show="true"
             app:spinner_divider_size="0.4dp"
             app:spinner_item_height="46dp"
             app:spinner_popup_animation="fade"
             app:spinner_popup_background="@color/gray_200"
-            app:spinner_popup_elevation="14dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_color" />
+            app:spinner_popup_elevation="14dp" />
 
         <TextView
             android:id="@+id/tv_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="490dp"
-            android:layout_marginEnd="284dp"
-            android:layout_marginBottom="160dp"
+            android:layout_marginStart="76dp"
+            android:layout_marginTop="566dp"
+            android:layout_marginEnd="238dp"
+            android:layout_marginBottom="267dp"
             android:text="Color"
             android:textColor="@color/grey"
             android:textSize="15sp"
@@ -163,6 +170,41 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="238dp"
+            android:layout_marginTop="567dp"
+            android:layout_marginEnd="79dp"
+            android:layout_marginBottom="267dp"
+            android:text="Price"
+            android:textColor="@color/grey"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/edt_price_modal"
+            android:layout_width="140dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="191dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="211dp"
+            android:background="@drawable/edit_text_shape"
+            android:gravity="center"
+            android:hint="$0.00"
+            android:inputType="numberDecimal"
+            android:padding="8dp"
+            android:textColorHint="@color/grey"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_update_detail"
