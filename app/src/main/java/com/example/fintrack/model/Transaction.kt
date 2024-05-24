@@ -2,6 +2,7 @@ package com.example.fintrack.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "EXPENSE")
 
@@ -13,5 +14,5 @@ data class Transaction(
     val date: String,
     val colorTransaction: ColorTransaction,
     val image: String,
-    val id:Int
-)
+    val transactionId: Int
+): Serializable

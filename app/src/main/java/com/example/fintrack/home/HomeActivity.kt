@@ -1,5 +1,6 @@
 package com.example.fintrack.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -13,6 +14,7 @@ import com.example.fintrack.adapter.TransactionsAdapter
 import com.example.fintrack.data.local.ExpenseDatabase
 import com.example.fintrack.databinding.ActivityHomeBinding
 import com.example.fintrack.fragments.CreateExpenseFragment
+import com.example.fintrack.model.Transaction
 import com.example.fintrack.repository.ExpenseRepository
 import com.example.fintrack.viewModel.ExpenseViewModel
 import com.example.fintrack.viewModel.ExpenseViewModelFactory
@@ -26,15 +28,16 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var adapter: TransactionsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        binding = ActivityHomeBinding.inflate(layoutInflater)
-        val view = binding.root
         super.onCreate(savedInstanceState)
-        setContentView(view)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar_home)
         setSupportActionBar(toolbar)
 
-        adapter = TransactionsAdapter(emptyList())
+        adapter = TransactionsAdapter(emptyList()) { transaction ->
+            openDetailActivity(transaction)
+        }
         binding.rvTransactions.adapter = adapter
 
         setupNewExpense()
@@ -45,7 +48,6 @@ class HomeActivity : AppCompatActivity() {
                 adapter.updateTransactions(it)
             }
         })
-
     }
 
     private fun setupViewModel() {
@@ -53,7 +55,6 @@ class HomeActivity : AppCompatActivity() {
         val viewModelProviderFactory = ExpenseViewModelFactory(application, expenseRepository)
         expenseViewModel =
             ViewModelProvider(this, viewModelProviderFactory)[ExpenseViewModel::class.java]
-
     }
 
     private fun setupNewExpense() {
@@ -65,6 +66,13 @@ class HomeActivity : AppCompatActivity() {
     private fun openModalNewExpense() {
         val dialog = CreateExpenseFragment()
         dialog.show(supportFragmentManager, "CreateExpenseFragment")
+    }
+
+    private fun openDetailActivity(transaction: Transaction) {
+        val intent = Intent(this, DetailActivity::class.java).apply {
+            putExtra("TRANSACTION", transaction)
+        }
+        startActivity(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
