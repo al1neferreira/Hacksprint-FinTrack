@@ -30,7 +30,6 @@ import com.example.fintrack.util.ColorList
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import com.skydoves.powerspinner.PowerSpinnerView
 import java.util.Calendar
-import java.util.UUID
 
 class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), MenuProvider {
 
@@ -112,7 +111,6 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
             val category = psvCategory.text.toString()
             val amount = edtPriceModal.text.toString()
             val color = selectedColorTransaction
-            val id = generateTransactionId()
 
             val date = "${pickDateButton.month + 1}/${pickDateButton.dayOfMonth}/${pickDateButton.year}"
 
@@ -173,9 +171,5 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         TODO()
-    }
-
-    private fun generateTransactionId(): String {
-        return UUID.randomUUID().toString()
     }
 }

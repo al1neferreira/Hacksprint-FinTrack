@@ -12,7 +12,7 @@ import com.example.fintrack.model.Transaction
 @Dao
 interface ExpenseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun createExpense(transactions: Transaction)
+    suspend fun insertExpense(transactions: Transaction)
 
     @Update
     suspend fun updateExpense(transactions: Transaction)
@@ -23,7 +23,7 @@ interface ExpenseDao {
     @Query("SELECT * FROM EXPENSE ORDER BY amount DESC")
     fun getAllExpenses(): LiveData<List<Transaction>>
 
-    @Query("SELECT * FROM EXPENSE WHERE transactionId LIKE :query")
+    @Query("SELECT * FROM EXPENSE WHERE id LIKE :query")
     fun searchExpense(query: String?): LiveData<List<Transaction>>
 
     @Query("SELECT * FROM EXPENSE WHERE category LIKE :query")

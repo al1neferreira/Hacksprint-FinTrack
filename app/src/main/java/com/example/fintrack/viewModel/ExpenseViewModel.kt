@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class ExpenseViewModel(app:Application,private val expenseRepository: ExpenseRepository):AndroidViewModel(app) {
 
-    fun addExpense(transactions: Transaction)=
+    fun insertExpense(transactions: Transaction)=
         viewModelScope.launch {
             expenseRepository.createExpense(transactions)
         }
