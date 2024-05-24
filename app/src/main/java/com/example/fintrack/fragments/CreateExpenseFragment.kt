@@ -104,8 +104,9 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
             val amount = edtPriceModal.text.toString()
             val date = dateEditText.text.toString()
             val color = selectedColorTransaction
+            val transactionId = 1
 
-            val newTransaction = Transaction(title, category, amount, date, color, "", id)
+            val newTransaction = Transaction(title, category, amount, date, color, "", transactionId)
             homeViewModel.addExpenseData(newTransaction)
 
             dismiss()
