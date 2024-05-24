@@ -14,5 +14,5 @@ data class Transaction(
     val date: String,
     val colorTransaction: ColorTransaction,
     val image: String,
-    val transactionId: Int
+    val transactionId: String
 ): Serializable
