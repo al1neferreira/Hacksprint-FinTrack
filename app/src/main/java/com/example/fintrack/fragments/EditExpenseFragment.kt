@@ -1,6 +1,6 @@
 package com.example.fintrack.fragments
 
-import android.os.Build
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -10,8 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.AdapterView
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.DialogFragment
@@ -22,23 +23,20 @@ import com.example.fintrack.model.ColorTransaction
 import com.example.fintrack.model.Transaction
 import com.example.fintrack.util.ColorList
 import com.example.fintrack.viewModel.ExpenseViewModel
-import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.MaterialDatePicker
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
-import java.text.SimpleDateFormat
+import com.skydoves.powerspinner.PowerSpinnerView
 import java.util.Calendar
-import java.util.Locale
-import java.util.TimeZone
+import java.util.UUID
 
 class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), MenuProvider {
 
     private var editExpenseBinding: FragmentEditExpenseBinding? = null
     private val binding get() = editExpenseBinding!!
-    private lateinit var selectedColor: ColorTransaction
+    private lateinit var colorTransactionEdit: ColorTransaction
 
     private lateinit var expenseViewModel: ExpenseViewModel
     private lateinit var currentTransaction: Transaction
-    private val calendar: Calendar = Calendar.getInstance()
+    private var selectedNewDate: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,10 +45,10 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
     }
 
     private fun loadColorSpinnerEditExpense() {
-        selectedColor = ColorList().defaultColorTransaction
+        colorTransactionEdit = ColorList().defaultColorTransaction
         binding.spinnerEditColors.apply {
             adapter = ColorSpinnerAdapter(requireContext(), ColorList().basicColor())
-            setSelection(ColorList().colorPosition(selectedColor), false)
+            setSelection(ColorList().colorPosition(colorTransactionEdit), false)
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -58,7 +56,7 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
                     position: Int,
                     id: Long
                 ) {
-                    selectedColor = ColorList().basicColor()[position]
+                    colorTransactionEdit = ColorList().basicColor()[position]
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -96,32 +94,39 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
         editExpenseBinding = FragmentEditExpenseBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
 
-        selectedDatePicker()
+        val dateButton = binding.datePickerEditExpense
+        val editTitleExpense: EditText = binding.tvEditTitle
+        val editCategories: PowerSpinnerView = binding.spinnerEditCategories
+        val editPrice: EditText = binding.newPriceModal
+        val btnUpdateExpense: Button = binding.btnUpdateDetail
+
+        editPrice.addTextChangedListener(PriceFormatWatcher(editPrice))
+
+
+
+        btnUpdateExpense.setOnClickListener {
+            val title = editTitleExpense.text.toString()
+            val category = editCategories.text.toString()
+            val amount = editPrice.text.toString()
+            val color = colorTransactionEdit
+            val editId = generateTransactionId()
+
+            val date = "${dateButton.month + 1}/${dateButton.dayOfMonth}/${dateButton.year}"
+
+            val editTransaction = Transaction(title, category, amount, date, color, "", editId)
+
+            expenseViewModel.updateExpense(editTransaction)
+
+        }
+
+        dateButton.setOnClickListener {
+            selectedDatePicker()
+        }
+
         loadColorSpinnerEditExpense()
         loadCategorySpinner()
 
         return binding.root
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.datePickerEditExpense.setOnDateChangedListener { _, year, monthOfYear, dayOfMonth ->
-            val selectedDate = Calendar.getInstance().apply {
-            calendar.set(Calendar.YEAR, year)
-            calendar.set(Calendar.MONTH, monthOfYear)
-            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                }.time
-        }
-
-        binding.btnUpdateDetail.setOnClickListener {
-            val editExpenseTitle = binding.tvEditTitle.text.toString()
-            val editCategory = binding.spinnerEditCategories.toString()
-            val editColor = binding.spinnerEditColors.toString()
-
-        }
-
     }
 
 
@@ -139,36 +144,29 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
     }
 
     private fun selectedDatePicker() {
-        val editDate = MaterialDatePicker.Builder.datePicker()
-            .setTitleText("Select date of expense")
-            .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-            .build()
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        val today = MaterialDatePicker.todayInUtcMilliseconds()
-        val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            { _, selectedYear, selectedMonth, selectedDayOfMonth ->
+                selectedNewDate = "${selectedMonth + 1}/$selectedDayOfMonth/$selectedYear"
+                Toast.makeText(
+                    requireContext(),
+                    "Date selected: $selectedNewDate",
+                    Toast.LENGTH_SHORT
+                ).show()
+            },
+            year,
+            month,
+            day
+        )
 
-        calendar.timeInMillis = today
-        calendar[Calendar.MONTH] = Calendar.JANUARY
-        val janThisYear = calendar.timeInMillis
-
-        calendar.timeInMillis = today
-        calendar[Calendar.MONTH] = Calendar.DECEMBER
-        val decThisYear = calendar.timeInMillis
-
-        val constraintsBuilder =
-            CalendarConstraints.Builder()
-                .setStart(janThisYear)
-                .setEnd(decThisYear)
-
-        editDate.addOnPositiveButtonClickListener {
-            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            val date = sdf.format(it)
-
-            //editDate.show(requireFragmentManager(), "Date Picker")
-        }
-
-
+        datePickerDialog.show()
     }
+
 
     private fun deleteExpense() {
         AlertDialog.Builder(requireActivity()).apply {
@@ -182,6 +180,12 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
             setNegativeButton("Cancel", null)
         }.create().show()
 
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        editExpenseBinding = null
     }
 
 
@@ -202,9 +206,9 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        editExpenseBinding = null
+    private fun generateTransactionId(): String {
+        return UUID.randomUUID().toString()
     }
+
 
 }
