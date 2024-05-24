@@ -109,11 +109,11 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
             val category = editCategories.text.toString()
             val amount = editPrice.text.toString()
             val color = colorTransactionEdit
-            val editId = generateTransactionId()
+
 
             val date = "${dateButton.month + 1}/${dateButton.dayOfMonth}/${dateButton.year}"
 
-            val editTransaction = Transaction(title, category, amount, date, color, "", editId)
+            val editTransaction = Transaction(title, category, amount, date, color, "", id)
 
             expenseViewModel.updateExpense(editTransaction)
 
@@ -204,10 +204,6 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
             else -> false
         }
 
-    }
-
-    private fun generateTransactionId(): String {
-        return UUID.randomUUID().toString()
     }
 
 
