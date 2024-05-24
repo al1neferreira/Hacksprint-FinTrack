@@ -108,9 +108,11 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
         super.onViewCreated(view, savedInstanceState)
 
         binding.datePickerEditExpense.setOnDateChangedListener { _, year, monthOfYear, dayOfMonth ->
+            val selectedDate = Calendar.getInstance().apply {
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, monthOfYear)
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                }.time
         }
 
         binding.btnUpdateDetail.setOnClickListener {

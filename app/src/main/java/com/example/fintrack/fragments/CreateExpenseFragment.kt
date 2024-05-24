@@ -1,6 +1,7 @@
 package com.example.fintrack.fragments
 
 import android.app.DatePickerDialog
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -11,9 +12,11 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.Button
+import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -34,6 +37,7 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
     private val binding get() = creatExpenseBinding!!
     private lateinit var selectedColorTransaction: ColorTransaction
     private val homeViewModel: HomeViewModel by activityViewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,13 +86,13 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         creatExpenseBinding = FragmentCreatExpenseBinding.inflate(inflater, container, false)
 
-        val dateEditText = binding.edtDateModal
         val pickDateButton = binding.btnPickDate
         val backButton: ImageView = binding.btnBack
         val edtTitleModal: EditText = binding.edtTitleModal
@@ -102,19 +106,27 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
             val title = edtTitleModal.text.toString()
             val category = psvCategory.text.toString()
             val amount = edtPriceModal.text.toString()
-            val date = dateEditText.text.toString()
+            val date = pickDateButton.toString()
             val color = selectedColorTransaction
             val transactionId = 1
 
             val newTransaction = Transaction(title, category, amount, date, color, "", transactionId)
-            homeViewModel.addExpenseData(newTransaction)
 
+            val newDate = pickDateButton.setOnDateChangedListener { view, year, monthOfYear, dayOfMonth ->
+               showDatePicker(pickDateButton)
+
+            }
+
+
+            homeViewModel.addExpenseData(newTransaction)
             dismiss()
         }
 
-        pickDateButton.setOnClickListener {
-            showDatePicker(dateEditText)
+        /*pickDateButton.setOnClickListener {
+
         }
+
+         */
 
         backButton.setOnClickListener {
             dismiss()
@@ -139,23 +151,37 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
         dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
     }
 
-    private fun showDatePicker(editText: EditText) {
-        val calendar = Calendar.getInstance()
+    private fun showDatePicker(datePicker: DatePicker) {
+        val datePicker = binding.btnPickDate
+
+       val calendar = Calendar.getInstance()
+        datePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)){ view, year, month, day ->
+            val month = month + 1
+            val msg = "You selected: $day/$month/$year"
+            Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
+        }
+
+        /*
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
+
         val datePickerDialog = DatePickerDialog(
+
             requireContext(),
-            { _, selectedYear, selectedMonth, selectedDay ->
-                val formattedDate = "$selectedDay/${selectedMonth + 1}/$selectedYear"
-                editText.setText(formattedDate)
+            { _, selectedYear, selectedMonth, selectedDayOfMonth ->
+                val formattedDate = "$selectedYear/${selectedMonth + 1}/$selectedDayOfMonth"
+                datePicker.updateDate(formattedDate.toInt())
             },
             year,
             month,
             day
         )
         datePickerDialog.show()
+
+        */
     }
 
     override fun onDestroyView() {
