@@ -29,7 +29,8 @@ class CategoryListAdapter() :
     }
 
     override fun onBindViewHolder(holder: CategoryListAdapter.CategoryViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val category = getItem(position)
+        holder.bind(category, onClick)
     }
 
     class CategoryViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
