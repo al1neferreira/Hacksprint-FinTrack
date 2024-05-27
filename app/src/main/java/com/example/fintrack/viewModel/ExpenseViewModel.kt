@@ -5,28 +5,23 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fintrack.model.Transaction
 import com.example.fintrack.repository.ExpenseRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class ExpenseViewModel(app:Application,private val expenseRepository: ExpenseRepository):AndroidViewModel(app) {
+class ExpenseViewModel(application: Application, private val repository: ExpenseRepository) :
+    AndroidViewModel(application) {
 
-    fun insertExpense(transactions: Transaction)=
-        viewModelScope.launch {
-            expenseRepository.createExpense(transactions)
-        }
+    val allExpenses: Flow<List<Transaction>> = repository.getAllExpense()
 
-    fun deleteExpense(transactions: Transaction) =
-        viewModelScope.launch {
-            expenseRepository.deleteExpense(transactions)
-        }
+    fun insertExpense(transaction: Transaction) = viewModelScope.launch {
+        repository.insertExpense(transaction)
+    }
 
-    fun updateExpense(transactions: Transaction) =
-        viewModelScope.launch {
-            expenseRepository.updateExpense(transactions)
+    fun updateExpense(transaction: Transaction) = viewModelScope.launch {
+        repository.uptadeExpense(transaction)
+    }
 
-        }
-
-    fun getAllExpenses() = expenseRepository.getAllExpenses()
-
-    fun searchExpense(query: String?) =
-        expenseRepository.searchExpense(query)
+    fun deleteExpense(transaction: Transaction) = viewModelScope.launch {
+        repository.deleteExpense(transaction)
+    }
 }

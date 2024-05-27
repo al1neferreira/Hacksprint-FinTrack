@@ -114,7 +114,7 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
 
             val date = "${pickDateButton.month + 1}/${pickDateButton.dayOfMonth}/${pickDateButton.year}"
 
-            val newTransaction = Transaction(title, category, amount, date, color, "", id)
+            val newTransaction = Transaction(id, title, category, amount, date, color, "")
 
             Log.d("CreateExpenseFragment", "New Transaction: $newTransaction")
 

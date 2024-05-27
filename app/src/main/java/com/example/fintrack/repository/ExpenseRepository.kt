@@ -1,15 +1,22 @@
 package com.example.fintrack.repository
 
-
 import com.example.fintrack.data.local.ExpenseDatabase
 import com.example.fintrack.model.Transaction
 
-class ExpenseRepository(private val db:ExpenseDatabase) {
 
-    suspend fun createExpense(transactions: Transaction) = db.getExpenseDao().insertExpense(transactions)
-    suspend fun updateExpense(transactions: Transaction) = db.getExpenseDao().updateExpense(transactions)
-    suspend fun deleteExpense(transactions: Transaction)=db.getExpenseDao().deleteExpense(transactions)
+class ExpenseRepository(private val db: ExpenseDatabase) {
 
-    fun getAllExpenses() = db.getExpenseDao().getAllExpenses()
-    fun searchExpense(query: String?) = db.getExpenseDao().searchExpense(query)
+    suspend fun insertExpense(transaction: Transaction) =
+        db.getExpenseDao().insertExpense(transaction)
+
+    suspend fun uptadeExpense(transaction: Transaction) =
+        db.getExpenseDao().uptadeExpense(transaction)
+
+    suspend fun deleteExpense(transaction: Transaction) =
+        db.getExpenseDao().deleteExpense(transaction)
+
+    fun getAllExpense() = db.getExpenseDao().getAllExpense()
+
+    fun getExpenseById(id: Int) = db.getExpenseDao().getExpenseById(id)
+
 }

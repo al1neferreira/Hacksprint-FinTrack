@@ -1,6 +1,5 @@
 package com.example.fintrack.data.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -8,26 +7,24 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.fintrack.model.Transaction
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ExpenseDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertExpense(transactions: Transaction)
 
-    @Update
-    suspend fun updateExpense(transactions: Transaction)
+    @Query("SELECT * FROM all_transactions")
+    fun getAllExpense(): Flow<List<Transaction>>
+
+    @Query("SELECT * FROM all_transactions WHERE id = :id")
+    fun getExpenseById(id: Int): Transaction?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertExpense(transaction: Transaction): Long
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun uptadeExpense(transaction: Transaction)
 
     @Delete
-    suspend fun deleteExpense(transactions: Transaction)
-
-    @Query("SELECT * FROM EXPENSE ORDER BY amount DESC")
-    fun getAllExpenses(): LiveData<List<Transaction>>
-
-    @Query("SELECT * FROM EXPENSE WHERE id LIKE :query")
-    fun searchExpense(query: String?): LiveData<List<Transaction>>
-
-    @Query("SELECT * FROM EXPENSE WHERE category LIKE :query")
-    fun searchCategory(query: String?):LiveData<List<Transaction>>
-
+    fun deleteExpense(transaction: Transaction)
 
 }

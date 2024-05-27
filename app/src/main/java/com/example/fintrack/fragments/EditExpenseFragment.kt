@@ -26,7 +26,6 @@ import com.example.fintrack.viewModel.ExpenseViewModel
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import com.skydoves.powerspinner.PowerSpinnerView
 import java.util.Calendar
-import java.util.UUID
 
 class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), MenuProvider {
 
@@ -90,7 +89,7 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         editExpenseBinding = FragmentEditExpenseBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
 
@@ -113,7 +112,7 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
 
             val date = "${dateButton.month + 1}/${dateButton.dayOfMonth}/${dateButton.year}"
 
-            val editTransaction = Transaction(title, category, amount, date, color, "", id)
+            val editTransaction = Transaction(id, title, category, amount, date, color, "")
 
             expenseViewModel.updateExpense(editTransaction)
 

@@ -6,10 +6,15 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.fintrack.repository.ExpenseRepository
 
 class ExpenseViewModelFactory(
-    val app:Application, private val expenseRepository: ExpenseRepository
-):ViewModelProvider.Factory {
+    private val application: Application,
+    private val repository: ExpenseRepository
+) : ViewModelProvider.AndroidViewModelFactory(application) {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return ExpenseViewModel(app, expenseRepository) as T
+        if (modelClass.isAssignableFrom(ExpenseViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return ExpenseViewModel(application, repository) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
