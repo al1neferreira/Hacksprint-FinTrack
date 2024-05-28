@@ -10,14 +10,19 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.room.Room
 import com.example.fintrack.R
+import com.example.fintrack.adapter.CategoryListAdapter
 import com.example.fintrack.adapter.TransactionsAdapter
+import com.example.fintrack.data.local.CategoryUiData
 import com.example.fintrack.databinding.ActivityHomeBinding
+import com.example.fintrack.db.CategoryDao
+import com.example.fintrack.db.CategoryEntity
 import com.example.fintrack.db.ExpenseDao
 import com.example.fintrack.db.ExpenseDatabase
 import com.example.fintrack.fragments.CreateExpenseFragment
 import com.example.fintrack.model.Transaction
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {
@@ -34,6 +39,11 @@ class HomeActivity : AppCompatActivity() {
         ).build()
     }
 
+    private val categoryDao: CategoryDao by lazy {
+        db.getCategoryDao()
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
@@ -42,13 +52,33 @@ class HomeActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar_home)
         setSupportActionBar(toolbar)
 
+        insertDefaultCategory()
+
         adapter = TransactionsAdapter(emptyList()) { transaction ->
             openDetailActivity(transaction)
         }
-        binding.rvTransactions.adapter = adapter
+
+        val rvTransaction = binding.rvTransactions
+        val rvCategory = binding.rvCategories
+
+        val categoryAdapter = CategoryListAdapter()
+
+        categoryAdapter.setOnClickListener { selected ->
+            val categoryTemp = categories.map { item ->
+                when {
+                    item.name == selected.name && !item.isSelected -> item.copy(isSelected = true)
+                    item.name == selected.name && item.isSelected -> item.copy(isSelected = false)
+                    else -> item
+                }
+            }
+        }
 
         expenseDao = db.getExpenseDao()
 
+        rvCategory.adapter = categoryAdapter
+        getCategoriesFromDatabase(categoryAdapter)
+
+        rvTransaction.adapter = adapter
 
         setupNewExpense()
         getTransactions()
@@ -60,7 +90,36 @@ class HomeActivity : AppCompatActivity() {
         })
     }
 
-     fun getTransactions() {
+    private fun insertDefaultCategory() {
+        val categoriesEntity = categories.map {
+            CategoryEntity(
+                name = it.name,
+                isSelected = it.isSelected
+            )
+        }
+
+        GlobalScope.launch(Dispatchers.IO) {
+            categoryDao.insertAll(categoriesEntity)
+        }
+
+    }
+
+    private fun getCategoriesFromDatabase(adapter: CategoryListAdapter) {
+        GlobalScope.launch(Dispatchers.IO) {
+            val categoriesFromDb: List<CategoryEntity> = categoryDao.getAll()
+            val categoriesUiData = categoriesFromDb.map {
+                CategoryUiData(
+                    name = it.name,
+                    isSelected = it.isSelected
+                )
+            }
+            adapter.submitList(categoriesUiData)
+
+        }
+
+    }
+
+    fun getTransactions() {
         CoroutineScope(Dispatchers.IO).launch {
             val listTransactions = expenseDao.getAllExpense().collect { transactions ->
                 homeViewModel.updateTransactions(transactions)
@@ -99,3 +158,55 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 }
+
+val categories = listOf(
+    CategoryUiData(
+        name = "ALL",
+        isSelected = false
+    ),
+    CategoryUiData(
+        name = "FOOD",
+        isSelected = false
+    ),
+    CategoryUiData(
+        name = "TRANSPORT",
+        isSelected = false
+    ),
+    CategoryUiData(
+        name = "ENTERTAINMENT",
+        isSelected = false
+    ),
+    CategoryUiData(
+        name = "HEALTH",
+        isSelected = false
+    ),
+    CategoryUiData(
+        name = "INTERNET",
+        isSelected = false
+    ),
+    CategoryUiData(
+        name = "HOME",
+        isSelected = false
+    ),
+    CategoryUiData(
+        name = "CLOTHE",
+        isSelected = false
+    ),
+    CategoryUiData(
+        name = "ELETRICITY",
+        isSelected = false
+    ),
+    CategoryUiData(
+        name = "GAS STATION",
+        isSelected = false
+    ),
+    CategoryUiData(
+        name = "GAMES",
+        isSelected = false
+    ),
+    CategoryUiData(
+        name = "OTHERS",
+        isSelected = false
+    ),
+)
+

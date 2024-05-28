@@ -7,7 +7,7 @@ import com.example.fintrack.model.ColorTransactionConverter
 import com.example.fintrack.model.Transaction
 
 @Database(
-    entities = [Transaction::class],
+    entities = [Transaction::class, CategoryEntity::class],
     version = 1,
     exportSchema = false
 )
@@ -17,26 +17,7 @@ import com.example.fintrack.model.Transaction
 abstract class ExpenseDatabase : RoomDatabase() {
 
     abstract fun getExpenseDao(): ExpenseDao
-
-//    companion object {
-//        @Volatile
-//        private var instance: ExpenseDatabase? = null
-//        private var LOCK = Any()
-//
-//        operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
-//
-//                instance ?: createDatabase(context).also {
-//                    instance = it
-//                }
-//            }
-//
-//        private fun createDatabase(context: Context) =
-//            Room.databaseBuilder(
-//                context.applicationContext,
-//                ExpenseDatabase::class.java,
-//                "expense_db"
-//            ).build()
-//    }
+    abstract fun getCategoryDao():CategoryDao
 
 }
 
