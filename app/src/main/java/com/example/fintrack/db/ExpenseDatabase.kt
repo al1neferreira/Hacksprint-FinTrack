@@ -6,18 +6,14 @@ import androidx.room.TypeConverters
 import com.example.fintrack.model.ColorTransactionConverter
 import com.example.fintrack.model.Transaction
 
-@Database(
-    entities = [Transaction::class, CategoryEntity::class],
-    version = 1,
-    exportSchema = false
-)
+@Database(entities = [Transaction::class, CategoryEntity::class], version = 2, exportSchema = false)
 
 @TypeConverters(ColorTransactionConverter::class)
 
 abstract class ExpenseDatabase : RoomDatabase() {
 
     abstract fun getExpenseDao(): ExpenseDao
-    abstract fun getCategoryDao():CategoryDao
+    abstract fun getCategoryDao(): CategoryDao
 
 }
 

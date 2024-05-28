@@ -63,6 +63,22 @@ class HomeActivity : AppCompatActivity() {
 
         val categoryAdapter = CategoryListAdapter()
 
+
+        expenseDao = db.getExpenseDao()
+
+        rvCategory.adapter = categoryAdapter
+        getCategoriesFromDatabase(categoryAdapter)
+
+        rvTransaction.adapter = adapter
+
+        selectACategory(categoryAdapter)
+        setupNewExpense()
+        getTransactions()
+        updateListTransactions()
+
+    }
+
+    private fun selectACategory(categoryAdapter: CategoryListAdapter) {
         categoryAdapter.setOnClickListener { selected ->
             val categoryTemp = categories.map { item ->
                 when {
@@ -72,17 +88,9 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         }
+    }
 
-        expenseDao = db.getExpenseDao()
-
-        rvCategory.adapter = categoryAdapter
-        getCategoriesFromDatabase(categoryAdapter)
-
-        rvTransaction.adapter = adapter
-
-        setupNewExpense()
-        getTransactions()
-
+    private fun updateListTransactions() {
         homeViewModel.expenseData.observe(this, Observer { expenses ->
             expenses?.let {
                 adapter.updateTransactions(it)

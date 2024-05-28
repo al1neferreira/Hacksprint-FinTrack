@@ -30,8 +30,6 @@ class DetailActivity: AppCompatActivity() {
 
 
         setupEditExpense()
-//        setupViewModel()
-
 
         val btnBack = binding.btnBack
 
@@ -50,13 +48,6 @@ class DetailActivity: AppCompatActivity() {
         binding.tvDatePickerDetail.text = transaction.date
         binding.tvAmountValueDetail.text = transaction.amount
     }
-
-//    private fun setupViewModel() {
-//        val expenseRepository = ExpenseRepository(ExpenseDatabase(this))
-//        val viewModelProviderFactory = ExpenseViewModelFactory(application, expenseRepository)
-//        expenseViewModel =
-//            ViewModelProvider(this, viewModelProviderFactory)[ExpenseViewModel::class.java]
-//    }
 
     private fun setupEditExpense() {
         binding.btnEditDetail.setOnClickListener {
