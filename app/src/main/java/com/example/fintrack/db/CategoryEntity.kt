@@ -1,7 +1,6 @@
 package com.example.fintrack.db
 
 import androidx.room.ColumnInfo
-import androidx.room.DatabaseView
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
