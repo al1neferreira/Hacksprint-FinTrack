@@ -1,9 +1,9 @@
 package com.example.fintrack.fragments
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -20,15 +20,22 @@ import androidx.annotation.RequiresApi
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.room.Room
 import com.example.fintrack.R
 import com.example.fintrack.adapter.ColorSpinnerAdapter
 import com.example.fintrack.databinding.FragmentCreatExpenseBinding
+import com.example.fintrack.db.ExpenseDao
+import com.example.fintrack.db.ExpenseDatabase
+import com.example.fintrack.home.HomeActivity
 import com.example.fintrack.home.HomeViewModel
 import com.example.fintrack.model.ColorTransaction
 import com.example.fintrack.model.Transaction
 import com.example.fintrack.util.ColorList
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import com.skydoves.powerspinner.PowerSpinnerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.Calendar
 
 class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), MenuProvider {
@@ -38,10 +45,22 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
     private lateinit var selectedColorTransaction: ColorTransaction
     private val homeViewModel: HomeViewModel by activityViewModels()
     private var selectedDate: String? = null
+    private lateinit var applicationContext: Context
+    private lateinit var expenseDao: ExpenseDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.FullScreenDialog)
+
+        applicationContext = requireContext()
+        expenseDao = db.getExpenseDao()
+    }
+
+    private val db by lazy {
+        Room.databaseBuilder(
+            applicationContext,
+            ExpenseDatabase::class.java, "database-expense"
+        ).build()
     }
 
     private fun loadColorSpinner() {
@@ -112,13 +131,12 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
             val amount = edtPriceModal.text.toString()
             val color = selectedColorTransaction
 
-            val date = "${pickDateButton.month + 1}/${pickDateButton.dayOfMonth}/${pickDateButton.year}"
+            val date =
+                "${pickDateButton.month + 1}/${pickDateButton.dayOfMonth}/${pickDateButton.year}"
 
             val newTransaction = Transaction(id, title, category, amount, date, color, "")
 
-            Log.d("CreateExpenseFragment", "New Transaction: $newTransaction")
-
-            homeViewModel.addExpenseData(newTransaction)
+            insertTransaction(transaction = newTransaction)
 
             dismiss()
         }
@@ -131,6 +149,14 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
         loadCategorySpinner()
 
         return binding.root
+    }
+
+    private fun insertTransaction(transaction: Transaction) {
+        CoroutineScope(Dispatchers.IO).launch {
+            expenseDao.insertExpense(transaction)
+            //update list
+            (activity as? HomeActivity)?.getTransactions()
+        }
     }
 
     override fun onStart() {
@@ -152,10 +178,17 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        val datePickerDialog = DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDayOfMonth ->
-            selectedDate = "${selectedMonth + 1}/$selectedDayOfMonth/$selectedYear"
-            Toast.makeText(requireContext(), "Date selected: $selectedDate", Toast.LENGTH_SHORT).show()
-        }, year, month, day)
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            { _, selectedYear, selectedMonth, selectedDayOfMonth ->
+                selectedDate = "${selectedMonth + 1}/$selectedDayOfMonth/$selectedYear"
+                Toast.makeText(requireContext(), "Date selected: $selectedDate", Toast.LENGTH_SHORT)
+                    .show()
+            },
+            year,
+            month,
+            day
+        )
 
         datePickerDialog.show()
     }
