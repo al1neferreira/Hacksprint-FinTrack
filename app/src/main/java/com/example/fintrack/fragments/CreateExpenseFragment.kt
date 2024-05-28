@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.Button
+import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
@@ -97,6 +98,10 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
             "Game control",
             "Others"
         )
+        selectCategory(categories)
+    }
+
+    private fun selectCategory(categories: List<String>) {
         binding.psvCategory.apply {
             setItems(categories)
             setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String> { oldIndex, oldItem, newIndex, newItem ->
@@ -121,10 +126,37 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
 
         edtPriceModal.addTextChangedListener(PriceFormatWatcher(edtPriceModal))
 
+        selectDate(pickDateButton)
+
+        createANewExpense(btnCreateExpense, edtTitleModal, psvCategory, edtPriceModal, pickDateButton)
+
+        backToHomeActivity(backButton)
+
+        loadColorSpinner()
+        loadCategorySpinner()
+
+        return binding.root
+    }
+
+    private fun backToHomeActivity(backButton: ImageView) {
+        backButton.setOnClickListener {
+            dismiss()
+        }
+    }
+
+    private fun selectDate(pickDateButton: DatePicker) {
         pickDateButton.setOnClickListener {
             showDatePicker()
         }
+    }
 
+    private fun createANewExpense(
+        btnCreateExpense: Button,
+        edtTitleModal: EditText,
+        psvCategory: PowerSpinnerView,
+        edtPriceModal: EditText,
+        pickDateButton: DatePicker
+    ) {
         btnCreateExpense.setOnClickListener {
             val title = edtTitleModal.text.toString()
             val category = psvCategory.text.toString()
@@ -140,15 +172,6 @@ class CreateExpenseFragment : DialogFragment(R.layout.fragment_creat_expense), M
 
             dismiss()
         }
-
-        backButton.setOnClickListener {
-            dismiss()
-        }
-
-        loadColorSpinner()
-        loadCategorySpinner()
-
-        return binding.root
     }
 
     private fun insertTransaction(transaction: Transaction) {
