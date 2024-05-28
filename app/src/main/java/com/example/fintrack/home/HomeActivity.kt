@@ -21,6 +21,7 @@ import com.example.fintrack.db.ExpenseDatabase
 import com.example.fintrack.fragments.CreateExpenseFragment
 import com.example.fintrack.model.Transaction
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -30,6 +31,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var adapter: TransactionsAdapter
     private lateinit var expenseDao: ExpenseDao
+    private lateinit var categoryDao: CategoryDao
     private val homeViewModel: HomeViewModel by viewModels()
 
     private val db by lazy {
@@ -37,11 +39,6 @@ class HomeActivity : AppCompatActivity() {
             applicationContext,
             ExpenseDatabase::class.java, "database-expense"
         ).build()
-    }
-
-    private val categoryDao: CategoryDao by lazy {
-        db.getCategoryDao()
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,25 +49,23 @@ class HomeActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar_home)
         setSupportActionBar(toolbar)
 
-        insertDefaultCategory()
-
         adapter = TransactionsAdapter(emptyList()) { transaction ->
             openDetailActivity(transaction)
         }
 
         val rvTransaction = binding.rvTransactions
         val rvCategory = binding.rvCategories
-
         val categoryAdapter = CategoryListAdapter()
 
 
         expenseDao = db.getExpenseDao()
+        categoryDao = db.getCategoryDao()
 
         rvCategory.adapter = categoryAdapter
-        getCategoriesFromDatabase(categoryAdapter)
-
         rvTransaction.adapter = adapter
 
+        getCategoriesFromDatabase(categoryAdapter)
+        insertDefaultCategory()
         selectACategory(categoryAdapter)
         setupNewExpense()
         getTransactions()
@@ -94,10 +89,12 @@ class HomeActivity : AppCompatActivity() {
         homeViewModel.expenseData.observe(this, Observer { expenses ->
             expenses?.let {
                 adapter.updateTransactions(it)
+//                adapter.notifyDataSetChanged()
             }
         })
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun insertDefaultCategory() {
         val categoriesEntity = categories.map {
             CategoryEntity(
@@ -112,6 +109,7 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun getCategoriesFromDatabase(adapter: CategoryListAdapter) {
         GlobalScope.launch(Dispatchers.IO) {
             val categoriesFromDb: List<CategoryEntity> = categoryDao.getAll()
