@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("org.jetbrains.kotlin.kapt")
     id("kotlin-parcelize")
+//    id("com.google.dagger.hilt.android")
 
 }
 
@@ -40,6 +41,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
 }
 
 dependencies {
@@ -77,8 +79,22 @@ dependencies {
     //PowerSpinner
     implementation ("com.github.skydoves:powerspinner:1.2.7")
 
+    //ViewModel
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
     implementation ("androidx.fragment:fragment-ktx:1.4.1")
 
+    //DataStore
+    implementation ("androidx.datastore:datastore-core:1.0.0-alpha01")
+    implementation("androidx.datastore:datastore-preferences:1.0.0-alpha01")
+
+    //AWS Amplify
+    implementation ("com.amplifyframework:aws-auth-cognito:1.28.1")
+    implementation ("com.amplifyframework:aws-datastore:1.28.1")
+    implementation ("com.amplifyframework:aws-api:1.28.1")
+    implementation ("com.amplifyframework:core:1.28.1")
+
+    //Hilt
+//    implementation("com.google.dagger:hilt-android:2.44")
+//    kapt("com.google.dagger:hilt-android-compiler:2.44")
 
 }

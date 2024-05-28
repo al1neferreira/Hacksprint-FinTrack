@@ -8,24 +8,31 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.room.Room
 import com.example.fintrack.R
 import com.example.fintrack.adapter.TransactionsAdapter
-import com.example.fintrack.data.local.ExpenseDatabase
 import com.example.fintrack.databinding.ActivityHomeBinding
+import com.example.fintrack.db.ExpenseDao
+import com.example.fintrack.db.ExpenseDatabase
 import com.example.fintrack.fragments.CreateExpenseFragment
 import com.example.fintrack.model.Transaction
-import com.example.fintrack.repository.ExpenseRepository
-import com.example.fintrack.viewModel.ExpenseViewModel
-import com.example.fintrack.viewModel.ExpenseViewModelFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var expenseViewModel: ExpenseViewModel
-
     private lateinit var binding: ActivityHomeBinding
-    private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var adapter: TransactionsAdapter
+    private lateinit var expenseDao: ExpenseDao
+    private val homeViewModel: HomeViewModel by viewModels()
+
+    private val db by lazy {
+        Room.databaseBuilder(
+            applicationContext,
+            ExpenseDatabase::class.java, "database-expense"
+        ).build()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +47,11 @@ class HomeActivity : AppCompatActivity() {
         }
         binding.rvTransactions.adapter = adapter
 
+        expenseDao = db.getExpenseDao()
+
+
         setupNewExpense()
-        setupViewModel()
+        getTransactions()
 
         homeViewModel.expenseData.observe(this, Observer { expenses ->
             expenses?.let {
@@ -50,11 +60,12 @@ class HomeActivity : AppCompatActivity() {
         })
     }
 
-    private fun setupViewModel() {
-        val expenseRepository = ExpenseRepository(ExpenseDatabase(this))
-        val viewModelProviderFactory = ExpenseViewModelFactory(application, expenseRepository)
-        expenseViewModel =
-            ViewModelProvider(this, viewModelProviderFactory)[ExpenseViewModel::class.java]
+     fun getTransactions() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val listTransactions = expenseDao.getAllExpense().collect { transactions ->
+                homeViewModel.updateTransactions(transactions)
+            }
+        }
     }
 
     private fun setupNewExpense() {

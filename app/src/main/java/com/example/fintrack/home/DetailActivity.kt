@@ -5,15 +5,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.fintrack.R
-import com.example.fintrack.data.local.ExpenseDatabase
 import com.example.fintrack.databinding.ActivityDetailBinding
 import com.example.fintrack.fragments.EditExpenseFragment
 import com.example.fintrack.model.Transaction
-import com.example.fintrack.repository.ExpenseRepository
 import com.example.fintrack.viewModel.ExpenseViewModel
-import com.example.fintrack.viewModel.ExpenseViewModelFactory
 
 class DetailActivity: AppCompatActivity() {
 
@@ -34,7 +30,7 @@ class DetailActivity: AppCompatActivity() {
 
 
         setupEditExpense()
-        setupViewModel()
+//        setupViewModel()
 
 
         val btnBack = binding.btnBack
@@ -55,12 +51,12 @@ class DetailActivity: AppCompatActivity() {
         binding.tvAmountValueDetail.text = transaction.amount
     }
 
-    private fun setupViewModel() {
-        val expenseRepository = ExpenseRepository(ExpenseDatabase(this))
-        val viewModelProviderFactory = ExpenseViewModelFactory(application, expenseRepository)
-        expenseViewModel =
-            ViewModelProvider(this, viewModelProviderFactory)[ExpenseViewModel::class.java]
-    }
+//    private fun setupViewModel() {
+//        val expenseRepository = ExpenseRepository(ExpenseDatabase(this))
+//        val viewModelProviderFactory = ExpenseViewModelFactory(application, expenseRepository)
+//        expenseViewModel =
+//            ViewModelProvider(this, viewModelProviderFactory)[ExpenseViewModel::class.java]
+//    }
 
     private fun setupEditExpense() {
         binding.btnEditDetail.setOnClickListener {
