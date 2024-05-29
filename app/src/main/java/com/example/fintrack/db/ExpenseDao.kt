@@ -20,6 +20,9 @@ interface ExpenseDao {
     @Query("SELECT * FROM all_transactions WHERE id = :id")
     fun getExpenseById(id: Int): Transaction?
 
+    @Query("DELETE FROM all_transactions")
+    fun deleteAll()
+
     //used to insert new transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertExpense(vararg transaction: Transaction)

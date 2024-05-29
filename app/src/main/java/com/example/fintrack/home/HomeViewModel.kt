@@ -3,11 +3,14 @@ package com.example.fintrack.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.fintrack.db.ExpenseDao
+import androidx.lifecycle.viewModelScope
 import com.example.fintrack.model.Transaction
+import com.example.fintrack.repo.ExpenseRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
-class HomeViewModel() : ViewModel() {
+class HomeViewModel(private val repository: ExpenseRepository) : ViewModel() {
     private val _expenseData = MutableLiveData<List<Transaction>>()
     val expenseData: LiveData<List<Transaction>> get() = _expenseData
 
@@ -18,11 +21,18 @@ class HomeViewModel() : ViewModel() {
 
     }
 
-    fun getTransactions(expenseDao: ExpenseDao): Flow<List<Transaction>> {
-        return expenseDao.getAllExpense()
+    fun getTransactions(): Flow<List<Transaction>> {
+        return repository.getAllExpense()
     }
 
     fun updateTransactions(transactions: List<Transaction>) {
         _expenseData.postValue(transactions)
+    }
+
+    fun deleteAllExpenses() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAll()
+            _expenseData.postValue(emptyList())
+        }
     }
 }

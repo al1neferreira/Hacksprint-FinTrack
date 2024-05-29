@@ -8,9 +8,9 @@
         android:title="Light on"
         app:showAsAction="always" />
     <item
-        android:id="@+id/menu_more"
+        android:id="@+id/menu_delete_all"
         android:icon="@drawable/ic_more"
-        android:title="More"
+        android:title="Delete all"
         app:showAsAction="always" />
 
 </menu>
