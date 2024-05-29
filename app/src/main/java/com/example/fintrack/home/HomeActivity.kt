@@ -14,12 +14,14 @@ import com.example.fintrack.R
 import com.example.fintrack.adapter.CategoryListAdapter
 import com.example.fintrack.adapter.TransactionsAdapter
 import com.example.fintrack.data.local.CategoryUiData
+import com.example.fintrack.data.local.ExpenseUiData
 import com.example.fintrack.databinding.ActivityHomeBinding
 import com.example.fintrack.db.CategoryDao
 import com.example.fintrack.db.CategoryEntity
 import com.example.fintrack.db.ExpenseDao
 import com.example.fintrack.db.ExpenseDatabase
 import com.example.fintrack.fragments.CreateExpenseFragment
+import com.example.fintrack.model.ColorTransaction
 import com.example.fintrack.model.Transaction
 import com.example.fintrack.repo.ExpenseRepository
 import kotlinx.coroutines.CoroutineScope
@@ -32,8 +34,6 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
     private lateinit var adapter: TransactionsAdapter
-    private lateinit var expenseDao: ExpenseDao
-    private lateinit var categoryDao: CategoryDao
     private lateinit var homeViewModel: HomeViewModel
 
 
@@ -42,6 +42,14 @@ class HomeActivity : AppCompatActivity() {
             applicationContext,
             ExpenseDatabase::class.java, "database-expense"
         ).build()
+    }
+
+    private val categoryDao: CategoryDao by lazy {
+        db.getCategoryDao()
+    }
+
+    private val expenseDao: ExpenseDao by lazy {
+        db.getExpenseDao()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,9 +75,6 @@ class HomeActivity : AppCompatActivity() {
         val categoryAdapter = CategoryListAdapter()
 
 
-        expenseDao = db.getExpenseDao()
-        categoryDao = db.getCategoryDao()
-
         rvCategory.adapter = categoryAdapter
         rvTransaction.adapter = adapter
 
@@ -80,6 +85,7 @@ class HomeActivity : AppCompatActivity() {
         getTransactions()
         updateListTransactions()
         setupToolbar()
+        insertDefaultExpenses()
 
     }
 
@@ -105,6 +111,14 @@ class HomeActivity : AppCompatActivity() {
                     else -> item
                 }
             }
+            val transactionTemp =
+                if (selected.name != "ALL") {
+                    transactions.filter {
+                        it.category == selected.name
+                    }
+                } else {
+                    transactions
+                }
         }
     }
 
@@ -115,6 +129,24 @@ class HomeActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun insertDefaultExpenses(){
+        val transaction = transactions.map {
+            Transaction(
+                title = it.title,
+                category = it.category,
+                amount = it.amount,
+                date = it.date,
+                colorTransaction = it.colorTransaction,
+                image = it.image
+            )
+        }
+        GlobalScope.launch(Dispatchers.IO) {
+            expenseDao.insertAll(transaction)
+
+        }
+    }
+
 
     @OptIn(DelicateCoroutinesApi::class)
     private fun insertDefaultCategory() {
@@ -187,52 +219,64 @@ class HomeActivity : AppCompatActivity() {
 
 val categories = listOf(
     CategoryUiData(
-        name = "ALL",
-        isSelected = false
+        name = "ALL", isSelected = false
     ),
-    CategoryUiData(
-        name = "FOOD",
-        isSelected = false
+    CategoryUiData(name = "FOOD", isSelected = false),
+    CategoryUiData(name = "TRANSPORT", isSelected = false),
+    CategoryUiData(name = "ENTERTAINMENT", isSelected = false),
+    CategoryUiData(name = "HEALTH", isSelected = false),
+    CategoryUiData(name = "INTERNET", isSelected = false),
+    CategoryUiData(name = "HOME", isSelected = false),
+    CategoryUiData(name = "CLOTHE", isSelected = false),
+    CategoryUiData(name = "ELETRICITY", isSelected = false),
+    CategoryUiData(name = "GAS STATION", isSelected = false),
+    CategoryUiData(name = "GAMES", isSelected = false),
+    CategoryUiData(name = "OTHERS", isSelected = false),
+)
+
+val transactions = listOf(
+    Transaction(
+        0,
+        "Uber",
+        "TRANSPORT",
+        "50.00",
+        "20-05-2024",
+        ColorTransaction("Silver", "C0C0C0", "blackHex"),
+        "image0"
     ),
-    CategoryUiData(
-        name = "TRANSPORT",
-        isSelected = false
+    Transaction(
+        1,
+        "Dinner",
+        "FOOD",
+        "100.00",
+        "23-05-2024",
+        ColorTransaction("Red", "FF0000", "whiteHex"),
+        "image1"
     ),
-    CategoryUiData(
-        name = "ENTERTAINMENT",
-        isSelected = false
+    Transaction(
+        2,
+        "Cinema",
+        "ENTERTAINMENT",
+        "35.00",
+        "13-05-2024",
+        ColorTransaction("Lime", "00FF00", "blackHex"), "image2"
     ),
-    CategoryUiData(
-        name = "HEALTH",
-        isSelected = false
+    Transaction(
+        3,
+        "Gym",
+        "HEALTH",
+        "85.00",
+        "10-05-2024",
+        ColorTransaction("Yellow", "FFFF00", "blackHex"), "image3"
+
     ),
-    CategoryUiData(
-        name = "INTERNET",
-        isSelected = false
-    ),
-    CategoryUiData(
-        name = "HOME",
-        isSelected = false
-    ),
-    CategoryUiData(
-        name = "CLOTHE",
-        isSelected = false
-    ),
-    CategoryUiData(
-        name = "ELETRICITY",
-        isSelected = false
-    ),
-    CategoryUiData(
-        name = "GAS STATION",
-        isSelected = false
-    ),
-    CategoryUiData(
-        name = "GAMES",
-        isSelected = false
-    ),
-    CategoryUiData(
-        name = "OTHERS",
-        isSelected = false
-    ),
+    Transaction(
+        4,
+        "Amazon",
+        "OTHER",
+        "20.00",
+        "03-05-2024",
+        ColorTransaction("Blue", "0000FF", "whiteHex"), "image3"
+    )
 )
 

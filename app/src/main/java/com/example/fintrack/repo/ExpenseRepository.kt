@@ -1,6 +1,7 @@
 package com.example.fintrack.repo
 
 import com.example.fintrack.db.ExpenseDatabase
+import com.example.fintrack.home.transactions
 import com.example.fintrack.model.Transaction
 
 
@@ -25,5 +26,7 @@ class ExpenseRepository(private val db: ExpenseDatabase) {
     fun getExpenseById(id: Int) = db.getExpenseDao().getExpenseById(id)
 
     suspend fun deleteAll() = db.getExpenseDao().deleteAll()
+
+    fun insertAll() = db.getExpenseDao().insertAll(transactions)
 
 }
