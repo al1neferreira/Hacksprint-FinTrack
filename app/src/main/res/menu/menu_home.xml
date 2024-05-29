@@ -7,9 +7,10 @@
         android:icon="@drawable/ic_light"
         android:title="Light on"
         app:showAsAction="always" />
+
     <item
         android:id="@+id/menu_delete_all"
-        android:icon="@drawable/ic_more"
+        android:icon="@drawable/delete_24dp"
         android:title="Delete all"
         app:showAsAction="always" />
 
