@@ -46,8 +46,8 @@ class DetailActivity : AppCompatActivity() {
             HomeViewModelFactory(ExpenseRepository(db))
         )[HomeViewModel::class.java]
 
-        supportActionBar?.setHomeButtonEnabled(true)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        //supportActionBar?.setHomeButtonEnabled(true)
+        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         transaction = intent.getSerializableExtra("TRANSACTION") as? Transaction
             ?: throw IllegalArgumentException("Transaction is required")
@@ -119,11 +119,6 @@ class DetailActivity : AppCompatActivity() {
             R.id.menu_delete -> {
                 true
             }
-
-            R.id.menu_share -> {
-                true
-            }
-
             else -> super.onOptionsItemSelected(item)
         }
     }

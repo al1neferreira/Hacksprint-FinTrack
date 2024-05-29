@@ -9,10 +9,4 @@
         android:icon="@drawable/delete_24dp"
         app:showAsAction="always"/>
 
-    <item
-        android:id="@+id/menu_share"
-        android:title="Share"
-        android:icon="@drawable/share_24dp"
-        app:showAsAction="always"/>
-
 </menu>

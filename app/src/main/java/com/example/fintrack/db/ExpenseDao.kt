@@ -35,4 +35,7 @@ interface ExpenseDao {
     @Delete
     fun deleteExpense(transaction: Transaction)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(transaction: List<Transaction>)
+
 }

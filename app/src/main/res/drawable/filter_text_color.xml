@@ -4,6 +4,6 @@
     <item android:state_selected="true"
         android:color="@android:color/white" />
     <!-- Not selected state -->
-    <item android:color="@color/grey"/>
+    <item android:color="@color/black"/>
 
 </selector>
