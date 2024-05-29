@@ -35,4 +35,10 @@ class HomeViewModel(private val repository: ExpenseRepository) : ViewModel() {
             _expenseData.postValue(emptyList())
         }
     }
+
+    fun deleteExpense(transaction: Transaction) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteExpense(transaction)
+        }
+    }
 }

@@ -112,7 +112,6 @@ class HomeActivity : AppCompatActivity() {
         homeViewModel.expenseData.observe(this, Observer { expenses ->
             expenses?.let {
                 adapter.updateTransactions(it)
-//                adapter.notifyDataSetChanged()
             }
         })
     }
@@ -143,9 +142,7 @@ class HomeActivity : AppCompatActivity() {
                 )
             }
             adapter.submitList(categoriesUiData)
-
         }
-
     }
 
     fun getTransactions() {
