@@ -9,6 +9,7 @@ import com.example.fintrack.repo.ExpenseRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeViewModel(private val repository: ExpenseRepository) : ViewModel() {
     private val _expenseData = MutableLiveData<List<Transaction>>()
@@ -39,6 +40,23 @@ class HomeViewModel(private val repository: ExpenseRepository) : ViewModel() {
     fun deleteExpense(transaction: Transaction) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteExpense(transaction)
+        }
+    }
+
+    fun getExpenseById(id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val expense = repository.getExpenseById(id)
+            expense?.let {
+                withContext(Dispatchers.Main) {
+                    _expenseData.value = listOf(it)
+                }
+            }
+        }
+    }
+
+    fun updateExpense(transaction: Transaction) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateExpense(transaction)
         }
     }
 }
