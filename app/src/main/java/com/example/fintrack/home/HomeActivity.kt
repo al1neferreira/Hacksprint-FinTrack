@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.example.fintrack.R
 import com.example.fintrack.adapter.CategoryListAdapter
@@ -72,13 +73,16 @@ class HomeActivity : AppCompatActivity() {
 
         val rvTransaction = binding.rvTransactions
         val rvCategory = binding.rvCategories
+
         val categoryAdapter = CategoryListAdapter()
+        //val transactionsAdapter = TransactionsAdapter()
 
 
         rvCategory.adapter = categoryAdapter
+        getCategoriesFromDatabase(categoryAdapter)
+
         rvTransaction.adapter = adapter
 
-        getCategoriesFromDatabase(categoryAdapter)
         insertDefaultCategory()
         selectACategory(categoryAdapter)
         setupNewExpense()
@@ -119,6 +123,10 @@ class HomeActivity : AppCompatActivity() {
                 } else {
                     transactions
                 }
+
+            categoryAdapter.submitList(categoryTemp)
+            //categoryAdapter.submitList(transactionTemp)
+
         }
     }
 
@@ -130,7 +138,7 @@ class HomeActivity : AppCompatActivity() {
         })
     }
 
-    private fun insertDefaultExpenses(){
+    private fun insertDefaultExpenses() {
         val transaction = transactions.map {
             Transaction(
                 title = it.title,
