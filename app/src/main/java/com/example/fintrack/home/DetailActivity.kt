@@ -18,7 +18,7 @@ import com.example.fintrack.repo.ExpenseRepository
 import com.example.fintrack.viewModel.ExpenseViewModel
 import java.lang.IllegalArgumentException
 
-class DetailActivity: AppCompatActivity() {
+class DetailActivity : AppCompatActivity() {
 
     private lateinit var expenseViewModel: ExpenseViewModel
     private lateinit var binding: ActivityDetailBinding
@@ -49,9 +49,6 @@ class DetailActivity: AppCompatActivity() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-//        val transaction = intent.getSerializableExtra("TRANSACTION") as? Transaction
-//        transaction?.let { populateDetails(it) }
-
         transaction = intent.getSerializableExtra("TRANSACTION") as? Transaction
             ?: throw IllegalArgumentException("Transaction is required")
 
@@ -71,7 +68,7 @@ class DetailActivity: AppCompatActivity() {
 
     private fun setupToolbar() {
         binding.topAppBar.setOnMenuItemClickListener {
-            if(it.itemId == R.id.menu_delete) {
+            if (it.itemId == R.id.menu_delete) {
                 deleteSingleExpense(transaction)
                 val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
@@ -96,13 +93,18 @@ class DetailActivity: AppCompatActivity() {
 
     private fun setupEditExpense() {
         binding.btnEditDetail.setOnClickListener {
-            openModalEditExpense()
+            openModalEditExpense(transaction)
         }
     }
 
 
-    private fun openModalEditExpense() {
+    private fun openModalEditExpense(transaction: Transaction) {
         val dialog = EditExpenseFragment()
+        val bundle = Bundle().apply {
+           putSerializable("transaction", transaction)
+            putInt("transactionId", transaction.id)
+        }
+        dialog.arguments = bundle
         dialog.show(supportFragmentManager, "EditExpenseFragment")
     }
 

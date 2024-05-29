@@ -1,6 +1,8 @@
 package com.example.fintrack.fragments
 
+import HomeViewModelFactory
 import android.app.DatePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -16,13 +18,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.room.Room
 import com.example.fintrack.R
 import com.example.fintrack.adapter.ColorSpinnerAdapter
 import com.example.fintrack.databinding.FragmentEditExpenseBinding
+import com.example.fintrack.db.ExpenseDao
+import com.example.fintrack.db.ExpenseDatabase
+import com.example.fintrack.home.HomeViewModel
 import com.example.fintrack.model.ColorTransaction
 import com.example.fintrack.model.Transaction
+import com.example.fintrack.repo.ExpenseRepository
 import com.example.fintrack.util.ColorList
-import com.example.fintrack.viewModel.ExpenseViewModel
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import com.skydoves.powerspinner.PowerSpinnerView
 import java.util.Calendar
@@ -33,14 +40,26 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
     private val binding get() = editExpenseBinding!!
     private lateinit var colorTransactionEdit: ColorTransaction
 
-    private lateinit var expenseViewModel: ExpenseViewModel
+    private lateinit var homeViewModel: HomeViewModel
     private lateinit var currentTransaction: Transaction
     private var selectedNewDate: String? = null
+    private lateinit var applicationContext: Context
+    private lateinit var expenseDao: ExpenseDao
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.FullScreenDialog)
+
+        applicationContext = requireContext()
+        expenseDao = db.getExpenseDao()
+    }
+
+    private val db by lazy {
+        Room.databaseBuilder(
+            applicationContext,
+            ExpenseDatabase::class.java, "database-expense"
+        ).build()
     }
 
     private fun loadColorSpinnerEditExpense() {
@@ -101,20 +120,30 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
 
         editPrice.addTextChangedListener(PriceFormatWatcher(editPrice))
 
+        homeViewModel = ViewModelProvider(
+            this,
+            HomeViewModelFactory(ExpenseRepository(db))
+        )[HomeViewModel::class.java]
 
+        val transaction = arguments?.getSerializable("transaction") as Transaction
+        currentTransaction = transaction
+        val transactionId = arguments?.getInt("transactionId")
+
+        populateFields(transaction)
 
         btnUpdateExpense.setOnClickListener {
             val title = editTitleExpense.text.toString()
             val category = editCategories.text.toString()
             val amount = editPrice.text.toString()
             val color = colorTransactionEdit
+            val date = selectedNewDate ?: currentTransaction.date
 
 
-            val date = "${dateButton.month + 1}/${dateButton.dayOfMonth}/${dateButton.year}"
+            val dateFormat = "${dateButton.month + 1}/${dateButton.dayOfMonth}/${dateButton.year}"
 
             val editTransaction = Transaction(id, title, category, amount, date, color, "")
 
-            expenseViewModel.updateExpense(editTransaction)
+            homeViewModel.updateExpense(editTransaction)
 
         }
 
@@ -128,6 +157,21 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
         return binding.root
     }
 
+    private fun populateFields(transaction: Transaction) {
+        binding.tvEditTitle.setText(transaction.title)
+        binding.newPriceModal.setText(transaction.amount)
+        binding.spinnerEditCategories.text = transaction.category
+
+        val dateArray = transaction.date.split("/")
+        val year = dateArray[2].toInt()
+        val month = dateArray[0].toInt() - 1
+        val day = dateArray[1].toInt()
+        binding.datePickerEditExpense.updateDate(year, month, day)
+
+        val colorAdapter = binding.spinnerEditColors.adapter as? ColorSpinnerAdapter
+        val colorPosition = colorAdapter?.getPosition(transaction.colorTransaction)
+        binding.spinnerEditColors.setSelection(colorPosition ?: 0)
+    }
 
     override fun onStart() {
         super.onStart()
@@ -172,7 +216,7 @@ class EditExpenseFragment : DialogFragment(R.layout.fragment_edit_expense), Menu
             setTitle("Delete Expense")
             setMessage("Do you want to delete this expense?")
             setPositiveButton("Delete") { _, _ ->
-                expenseViewModel.deleteExpense(currentTransaction)
+                homeViewModel.deleteExpense(currentTransaction)
                 Toast.makeText(context, "Expense Deleted", Toast.LENGTH_SHORT).show()
 
             }
