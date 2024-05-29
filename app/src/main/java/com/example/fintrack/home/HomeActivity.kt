@@ -1,13 +1,14 @@
 package com.example.fintrack.home
 
+import HomeViewModelFactory
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.example.fintrack.R
 import com.example.fintrack.adapter.CategoryListAdapter
@@ -20,6 +21,7 @@ import com.example.fintrack.db.ExpenseDao
 import com.example.fintrack.db.ExpenseDatabase
 import com.example.fintrack.fragments.CreateExpenseFragment
 import com.example.fintrack.model.Transaction
+import com.example.fintrack.repo.ExpenseRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -32,7 +34,8 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var adapter: TransactionsAdapter
     private lateinit var expenseDao: ExpenseDao
     private lateinit var categoryDao: CategoryDao
-    private val homeViewModel: HomeViewModel by viewModels()
+    private lateinit var homeViewModel: HomeViewModel
+
 
     private val db by lazy {
         Room.databaseBuilder(
@@ -53,6 +56,12 @@ class HomeActivity : AppCompatActivity() {
             openDetailActivity(transaction)
         }
 
+        homeViewModel = ViewModelProvider(
+            this,
+            HomeViewModelFactory(ExpenseRepository(db))
+        )[HomeViewModel::class.java]
+
+
         val rvTransaction = binding.rvTransactions
         val rvCategory = binding.rvCategories
         val categoryAdapter = CategoryListAdapter()
@@ -70,7 +79,21 @@ class HomeActivity : AppCompatActivity() {
         setupNewExpense()
         getTransactions()
         updateListTransactions()
+        setupToolbar()
 
+    }
+
+    private fun setupToolbar() {
+        binding.toolbarHome.setOnMenuItemClickListener {
+            if (it.itemId == R.id.menu_delete_all) {
+                deleteAll()
+            }
+            false
+        }
+    }
+
+    private fun deleteAll() {
+        homeViewModel.deleteAllExpenses()
     }
 
     private fun selectACategory(categoryAdapter: CategoryListAdapter) {
@@ -158,7 +181,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.menu_more -> true
+            R.id.menu_delete_all -> true
             R.id.menu_light -> true
             else -> super.onOptionsItemSelected(item)
         }

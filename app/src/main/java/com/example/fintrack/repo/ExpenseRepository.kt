@@ -24,4 +24,6 @@ class ExpenseRepository(private val db: ExpenseDatabase) {
     //get single transaction by id
     fun getExpenseById(id: Int) = db.getExpenseDao().getExpenseById(id)
 
+    suspend fun deleteAll() = db.getExpenseDao().deleteAll()
+
 }
